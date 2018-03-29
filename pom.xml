@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.zhangqin.framework</groupId>
+	<artifactId>zhangqin-framework</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>基础框架</name>
+	<description>基础框架</description>
+
+	<parent>
+		<groupId>com.zhangqin.parent</groupId>
+		<artifactId>zhangqin-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
+	<!-- 用于配置分发管理，配置相应的产品发布信息,主要用于发布，在执行mvn deploy后表示要发布的位置 -->
+	<distributionManagement>
+		<!-- 发布版本部署仓库 -->
+		<repository>
+			<!-- <id>Releases</id>
+			<name>Releases</name>
+			<url>http://192.168.1.182:8081/nexus/content/repositories/releases</url> -->
+			
+			<id>ysc-releases</id>
+			<name>ysc-releases</name>
+			<url>http://10.20.104.84:8088/nexus/content/repositories/releases</url>
+		</repository>
+		<!-- 快照版本部署仓库 -->
+		<snapshotRepository>
+			<!-- <id>Snapshots</id>
+			<name>Snapshots</name>
+			<url>http://192.168.1.182:8081/nexus/content/repositories/snapshots</url> -->
+			
+			<id>ysc-snapshots</id>
+			<name>ysc-snapshots</name>
+			<url>http://10.20.104.84:8088/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<modules>
+		<module>zhangqin-framework-web</module>
+		<module>zhangqin-framework-common</module>
+		<module>zhangqin-framework-core</module>
+		<module>zhangqin-framework-dal</module>
+		<module>zhangqin-framework-service</module>
+	</modules>
+	
+	<!-- 构建 -->
+	<build>
+		<finalName>zhangqin-framework-web</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!--fork : 如果没有该项配置，可能devtools不会起作用，即应用不会restart -->
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
