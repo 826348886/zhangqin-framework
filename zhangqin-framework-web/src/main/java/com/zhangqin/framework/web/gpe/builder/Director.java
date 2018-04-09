@@ -26,6 +26,7 @@ public class Director {
 	 * 产品构造方法，在该方法内，调用建造方法。
 	 */
 	public void construct() {
+		builder.coverByHeaderAnnotation();
 		// 根据原始字段初始化GpeBean
 		builder.initByOriginalFields();
 
@@ -36,7 +37,6 @@ public class Director {
 		builder.coverByFieldProperty();
 
 		// 使用注解配置覆盖GpeBean
-		builder.coverByHeaderAnnotation();
 		builder.coverByFieldAnnotation();
 		
 		// 数据转换处理
@@ -46,6 +46,8 @@ public class Director {
 		//builder.coverByUserProperty();
 		
 		builder.filterForbidFields();
+		
+		
 	}
 
 }

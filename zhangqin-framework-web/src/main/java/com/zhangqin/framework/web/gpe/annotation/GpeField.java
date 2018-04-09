@@ -189,4 +189,10 @@ public @interface GpeField {
 	 * @date 2017年12月14日
 	 */
 	DockType[] docks() default {};
+	
+	/**
+	 * 是否存需要计算合计,仅针对数值类型有效
+	 * @return
+	 */
+	boolean sum() default false;
 }

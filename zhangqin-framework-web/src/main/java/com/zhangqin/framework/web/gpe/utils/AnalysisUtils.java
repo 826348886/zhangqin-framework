@@ -43,7 +43,7 @@ public class AnalysisUtils {
 	 * @param clazz
 	 * @return
 	 */
-	public static List<Field> analysisOriginalFields(Class<?> clazz) {
+	public static List<Field> analysisOriginalFields(Class<?> clazz,boolean all) {
 		// 获取子类和父类的所有Field
 		List<Field> fieldList = new ArrayList<Field>();
 		Class<?> tempClass = clazz;
@@ -53,6 +53,11 @@ public class AnalysisUtils {
 				boolean exists = fieldList.parallelStream().filter(f -> {
 					return f.getName().equals(field.getName());
 				}).count() > 0;
+				// 是否标记@GpeField注解
+				if (!all && !AnnotatedElementUtils.hasAnnotation(field, GpeField.class)) {
+					continue;
+				}
+				
 				if (!exists && !field.getName().equals("serialVersionUID")) {
 					fieldList.add(field);
 				}
@@ -114,6 +119,8 @@ public class AnalysisUtils {
 		bean.setPshow(annotation.pshow());
 		// 是否导出标题
 		bean.setEshow(annotation.eshow());
+		// 是否解析所有的字段
+		bean.setAll(annotation.all());
 		return bean;
 	}
 	
@@ -210,6 +217,8 @@ public class AnalysisUtils {
 		if (null != annotation.docks() && annotation.docks().length > 0) {
 			bean.setDocks(Arrays.asList(annotation.docks()));
 		}
+		// 是否存需要计算合计
+		bean.setSum(annotation.sum());
 		return bean;
 	}
 }

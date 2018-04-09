@@ -115,6 +115,11 @@ public class GpeFieldAnalysis implements Serializable {
 	 */
 	private List<DockType> docks;
 
+	/**
+	 * 是否冻结列
+	 */
+	private boolean sum;
+
 	public String getField() {
 		return field;
 	}
@@ -265,6 +270,14 @@ public class GpeFieldAnalysis implements Serializable {
 
 	public void setDocks(List<DockType> docks) {
 		this.docks = docks;
+	}
+
+	public boolean isSum() {
+		return sum;
+	}
+
+	public void setSum(boolean sum) {
+		this.sum = sum;
 	}
 
 }

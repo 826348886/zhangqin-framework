@@ -38,7 +38,6 @@ public class FindGridResultMethodHandler extends AbstractGpeMethodHandler<Respon
 	@Override
 	@ResponseBody
 	public ResponseData<GridResult> handler(HttpServletRequest request, HttpServletResponse response) {
-		// UserInfo user = UserUtils.getCurrentUser();
 		GpeCacheManager.setMethodGenericInfo(getMethod().toGenericString());
 		GridResult result = GpeGridUtils.getGridResult("", getAnnotation().viewObject(), null);
 		return new ResponseData<GridResult>(ResponseCodeEnum.SUCCESS, result);

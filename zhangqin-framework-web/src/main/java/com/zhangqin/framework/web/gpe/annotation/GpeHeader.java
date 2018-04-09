@@ -55,4 +55,11 @@ public @interface GpeHeader {
 	 * @date 2017年9月21日
 	 */
 	boolean eshow() default true;
+	
+	/**
+	 * 是否需要标记@GpeField注解
+	 * true解析所有字段，false解析仅包含@GpeField的字段
+	 * @return
+	 */
+	boolean all() default false;
 }

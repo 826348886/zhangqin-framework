@@ -48,11 +48,6 @@ public class GpeFieldBean extends GpeFieldAnalysis implements Serializable, Comp
 		this.colspan = colspan;
 	}
 
-	@Override
-	public String toString() {
-		return "GpeFieldBean [rowspan=" + rowspan + ", colspan=" + colspan + "]";
-	}
-
 	/**
 	 * (non-Javadoc)
 	 * 

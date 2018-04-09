@@ -35,7 +35,7 @@ public class GpeHeaderBean implements Serializable {
 	 * 是否导出标题
 	 */
 	private boolean eshow;
-
+	
 	public String getTitle() {
 		return title;
 	}

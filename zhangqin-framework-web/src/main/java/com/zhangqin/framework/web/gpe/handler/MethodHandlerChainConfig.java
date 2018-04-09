@@ -27,7 +27,10 @@ public class MethodHandlerChainConfig {
 			// 注册saveColumnSetting方法
 			new SaveUserColumnSettingMethodHandler(annotation, mapping, new String[] { "gpe/saveColumnSetting" }),
 			// 注册restoreUserColumnSetting方法
-			new RestoreUserColumnSettingMethodHandler(annotation, mapping, new String[] { "gpe/restoreColumnSetting" })
+			new RestoreUserColumnSettingMethodHandler(annotation, mapping, new String[] { "gpe/restoreColumnSetting" }),
+			
+			// 注册export方法
+			new ExportMethodHandler(annotation, mapping, new String[] { "gpe/export" }, method)
 		});
 		return chainList;
 	}

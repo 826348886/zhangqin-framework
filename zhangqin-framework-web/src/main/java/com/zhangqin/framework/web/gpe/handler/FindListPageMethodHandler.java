@@ -27,11 +27,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHan
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.zhangqin.framework.common.enums.BaseEnum;
+import com.zhangqin.framework.common.utils.BeanMapper;
 import com.zhangqin.framework.common.utils.EnumUtils;
 import com.zhangqin.framework.common.utils.JsonMapper;
 import com.zhangqin.framework.web.common.utils.SpringContextUtils;
-import com.zhangqin.framework.web.gpe.GpeCacheManager;
-import com.zhangqin.framework.web.gpe.annotation.GpeField;
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
 import com.zhangqin.framework.web.gpe.bean.GpeBean;
 import com.zhangqin.framework.web.gpe.bean.GpeFieldBean;
@@ -48,17 +47,6 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 	 * 目标方法
 	 */
 	private Method targetMethod;
-
-	/**
-	 * 构造方法
-	 * 
-	 * @param annotation
-	 * @param mapping
-	 * @param paths
-	 */
-	private FindListPageMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, String[] paths) {
-		super(annotation, mapping, paths);
-	}
 
 	/**
 	 * 构造方法
@@ -99,8 +87,12 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 					}).collect(Collectors.toList());
 
 			mapList = enumHandler(getViewObject(), mapList);
+			
+			PageInfo<Map<String, Object>> newPage = new PageInfo<Map<String, Object>>();
+			BeanMapper.copy(pageInfo, newPage);
+			newPage.setList(mapList);
 
-			return new PageInfo<Map<String, Object>>(mapList);
+			return newPage;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,24 +154,6 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 				Entry<String, Object> entry = iterator.next();
 				String key = entry.getKey();
 				Object value = entry.getValue();
-				
-				// 获取原始字段
-				Field originalField = GpeCacheManager.getOriginalFields(clazz).get(key);
-				
-				GpeField annotation = originalField.getAnnotation(GpeField.class);
-				// 集合处理，指定由哪一个Handle处理集合类型的字段
-//				Class<? extends GpeFieldProcessor> processorClass = annotation.processor();
-//				if (!processorClass.equals(GpeFieldProcessor.class)) {
-//					GpeFieldProcessor collectionHandle = SpringContextUtils.getBean(processorClass);
-//					try {
-//						Object obj = originalField.get(value);
-//						Map<String,Object> hmap = collectionHandle.valueProcessor(obj);
-//						row.putAll(hmap);
-//					} catch (IllegalArgumentException | IllegalAccessException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
 				
 				if (fieldMap.containsKey(key) && originalFieldMap.containsKey(key)) {
 					String gformat = fieldMap.get(key).getGformat();

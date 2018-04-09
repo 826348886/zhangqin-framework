@@ -2,6 +2,7 @@ package com.zhangqin.framework.web.gpe.builder;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
@@ -48,6 +49,11 @@ public class ConcreteBuilder implements Builder {
 	 * 是否跳过部分的建造
 	 */
 	private boolean skip = false;
+	
+	/**
+	 * 是否解析所有的字段
+	 */
+	private boolean analysisAll = false;
 
 	/**
 	 * 原始字段Map
@@ -66,18 +72,8 @@ public class ConcreteBuilder implements Builder {
 
 	@Override
 	public void initByOriginalFields() {
-		// 从缓存中取GpeBean对象
-		GpeBean bean = GpeCacheManager.getCopyBean(clazz);
-		if (null != bean) {
-			gpe = bean;
-			skip = true;
-			return;
-		}else {
-			gpe = new GpeBean();
-		}
-
 		// 解析原始字段
-		List<Field> originalFields = AnalysisUtils.analysisOriginalFields(clazz);
+		List<Field> originalFields = AnalysisUtils.analysisOriginalFields(clazz,analysisAll);
 
 		// 原始字段转为GpeFieldBean对象
 		int sort = 0;
@@ -171,14 +167,24 @@ public class ConcreteBuilder implements Builder {
 
 	@Override
 	public void coverByHeaderAnnotation() {
+		// 从缓存中取GpeBean对象
+		GpeBean bean = GpeCacheManager.getCopyBean(clazz);
+		if (null != bean) {
+			gpe = bean;
+			skip = true;
+			return;
+		}else {
+			gpe = new GpeBean();
+		}
 		// 无需覆盖
 		if (skip) {
 			return;
 		}
 
 		GpeHeaderAnalysis header = AnalysisUtils.analysisHeader(clazz);
-		GpeHeaderBean bean = BeanMapper.map(header, GpeHeaderBean.class);
-		gpe.setHeader(bean);
+		analysisAll = header.isAll();
+		GpeHeaderBean headerBean = BeanMapper.map(header, GpeHeaderBean.class);
+		gpe.setHeader(headerBean);
 	}
 
 	@Override
@@ -290,6 +296,7 @@ public class ConcreteBuilder implements Builder {
 
 	@Override
 	public GpeBean retrieveResult() {
+		Collections.sort(gpe.getFields());
 		return gpe;
 	}
 

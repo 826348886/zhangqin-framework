@@ -9,6 +9,24 @@
 	<artifactId>zhangqin-framework-service</artifactId>
 
 	<dependencies>
+		<!-- ########## dubbo begin ########## -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+		</dependency>
+		<!-- dubbo缺省依赖包。Javassist是一个动态类库，可以用来检查、”动态”修改以及创建Java类。其功能与jdk自带的反射功能类似，但比反射功能更强大。 -->
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+		</dependency>
+		<!-- dubbo可选依赖。zookeeper客户端 -->
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
+		<!-- ########## dubbo end ########## -->
+		
+		
 		<dependency>
 			<groupId>com.zhangqin.framework</groupId>
 			<artifactId>zhangqin-framework-common</artifactId>

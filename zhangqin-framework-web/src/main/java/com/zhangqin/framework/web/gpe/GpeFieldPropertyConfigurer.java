@@ -85,9 +85,11 @@ public class GpeFieldPropertyConfigurer extends PropertyPlaceholderConfigurer {
 			// 遍历所有属性，赋值给bean
 			Arrays.asList(value.substring(1, value.length() - 1).replace("，", ",").split(",")).parallelStream()
 					.forEach(property -> {
-						String[] array = property.replace("：", ":").split(":");
-						String propertyName = array[0].trim();
-						String propertyValue = array[1].trim();
+						property = property.replace("：", ":");
+						//String[] array = property.replace("：", ":").split(":");
+						
+						String propertyName = property.substring(0, property.indexOf(":"));
+						String propertyValue = property.substring(property.indexOf(":") + 1);
 
 						Field field = ReflectionUtils.findField(GpeFieldPropertyBean.class, propertyName);
 						if (null != field) {

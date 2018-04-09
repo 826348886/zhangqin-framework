@@ -23,6 +23,11 @@ public class GpeHeaderAnalysis {
 	 */
 	private boolean eshow;
 
+	/**
+	 * 是否解析所有的字段
+	 */
+	private boolean all;
+
 	public String getTitle() {
 		return title;
 	}
@@ -53,6 +58,14 @@ public class GpeHeaderAnalysis {
 
 	public void setEshow(boolean eshow) {
 		this.eshow = eshow;
+	}
+
+	public boolean isAll() {
+		return all;
+	}
+
+	public void setAll(boolean all) {
+		this.all = all;
 	}
 
 }
