@@ -1,13 +1,13 @@
 package com.zhangqin.framework.web.gpe.utils;
 
 import java.util.List;
-import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.zhangqin.framework.common.utils.BeanMapper;
 import com.zhangqin.framework.web.gpe.bean.GpeBean;
-import com.zhangqin.framework.web.gpe.bean.result.UserColumnSettingField;
 import com.zhangqin.framework.web.gpe.bean.result.UserColumnSetting;
+import com.zhangqin.framework.web.gpe.bean.result.UserColumnSettingField;
+import com.zhangqin.framework.web.gpe.enums.UseFor;
 
 /**
  * 用户自定义设置工具类
@@ -24,9 +24,9 @@ public class GpeUserSettingUtils {
 	private GpeUserSettingUtils() {
 	}
 	
-	public static UserColumnSetting getUserSettingResult(Class<?> clazz, Set<String> forbidSet) {
+	public static UserColumnSetting getUserSettingResult(Class<?> clazz) {
 		// 获取Gpe对象
-		GpeBean gpe = GpeUtils.getGpeBean(clazz, forbidSet);
+		GpeBean gpe = GpeUtils.getGpeBean(clazz,UseFor.SETTING);
 		
 		// 用户设置
 		UserColumnSetting setting = new UserColumnSetting();

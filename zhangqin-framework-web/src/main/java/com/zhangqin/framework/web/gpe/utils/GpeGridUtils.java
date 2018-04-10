@@ -2,7 +2,6 @@ package com.zhangqin.framework.web.gpe.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -34,9 +33,9 @@ public class GpeGridUtils {
 	private GpeGridUtils() {
 	}
 
-	public static GridResult getGridResult(String userId, Class<?> clazz, Set<String> forbidSet) {
-		logger.debug("进入GpeGridUtils->getGridResult(),userId,:{},clazz:{},forbidSet:{}.", userId, clazz, forbidSet);
-		GpeBean bean = GpeUtils.getOwnerGpeBean(userId, clazz, forbidSet, UseFor.GRID);
+	public static GridResult getGridResult(Class<?> clazz) {
+		logger.debug("进入GpeGridUtils->getGridResult(),clazz:{}.", clazz);
+		GpeBean bean = GpeUtils.getGpeBean(clazz, UseFor.GRID);
 
 		return getGridResultFromGpeBean(bean);
 	}

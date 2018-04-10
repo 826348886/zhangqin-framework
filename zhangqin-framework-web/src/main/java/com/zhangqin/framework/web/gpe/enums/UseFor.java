@@ -23,7 +23,11 @@ public enum UseFor implements BaseEnum<UseFor, Integer> {
 	/**
 	 * 打印
 	 */
-	PRINT(3, "打印");
+	PRINT(3, "打印"),
+	/**
+	 * 列设置
+	 */
+	SETTING(4, "列设置");
 
 	/**
 	 * 

@@ -3,6 +3,7 @@ package com.zhangqin.framework.web.gpe.handler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
 import com.zhangqin.framework.common.entity.ResponseData;
@@ -25,6 +26,7 @@ public class SaveUserColumnSettingMethodHandler extends AbstractGpeMethodHandler
 	}
 
 	@Override
+	@ResponseBody
 	public ResponseData<Boolean> handler(HttpServletRequest request, HttpServletResponse response) {
 		// GPE数据获取及持久化接口
 		GpeRealm realm = SpringContextUtils.getBean(GpeRealm.class);
@@ -33,7 +35,7 @@ public class SaveUserColumnSettingMethodHandler extends AbstractGpeMethodHandler
 		String key = getMethod().toGenericString();
 		
 		// 获取列设置
-		String value = request.getAttribute("").toString();
+		String value = request.getParameter("setting");
 		UserColumnSetting setting = JsonMapper.fromJson(value, UserColumnSetting.class);
 		
 		// 保存用户列设置

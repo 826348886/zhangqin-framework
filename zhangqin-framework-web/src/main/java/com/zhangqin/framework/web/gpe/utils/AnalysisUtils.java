@@ -154,7 +154,6 @@ public class AnalysisUtils {
 			}
 		});
 		
-		
 		return beanList;
 	}
 

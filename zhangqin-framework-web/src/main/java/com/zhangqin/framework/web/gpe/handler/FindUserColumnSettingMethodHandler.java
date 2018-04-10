@@ -28,7 +28,7 @@ public class FindUserColumnSettingMethodHandler extends AbstractGpeMethodHandler
 	@Override
 	public ResponseData<UserColumnSetting> handler(HttpServletRequest request, HttpServletResponse response) {
 		GpeCacheManager.setMethodGenericInfo(getMethod().toGenericString());
-		UserColumnSetting setting = GpeUserSettingUtils.getUserSettingResult(getAnnotation().viewObject(), null);
+		UserColumnSetting setting = GpeUserSettingUtils.getUserSettingResult(getAnnotation().viewObject());
 		return new ResponseData<UserColumnSetting>(ResponseCodeEnum.SUCCESS, setting);
 	}
 

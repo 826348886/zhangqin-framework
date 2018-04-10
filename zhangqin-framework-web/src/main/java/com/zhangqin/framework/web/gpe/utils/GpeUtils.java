@@ -2,7 +2,6 @@ package com.zhangqin.framework.web.gpe.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +16,11 @@ import com.zhangqin.framework.web.gpe.builder.Director;
 import com.zhangqin.framework.web.gpe.enums.TextAlign;
 import com.zhangqin.framework.web.gpe.enums.UseFor;
 
+/**
+ * GPE工具类
+ * @author zhangqin
+ *
+ */
 public class GpeUtils {
 
 	/**
@@ -46,7 +50,7 @@ public class GpeUtils {
 	 * @date 2017年9月22日
 	 */
 	public static GpeBean getGpeBean(Class<?> clazz) {
-		return getOwnerGpeBean(null, clazz, null, UseFor.ALL);
+		return getGpeBean(clazz, UseFor.ALL);
 	}
 
 	/**
@@ -59,94 +63,10 @@ public class GpeUtils {
 	 * @date 2017年9月22日
 	 */
 	public static GpeBean getGpeBean(Class<?> clazz, UseFor useFor) {
-		return getOwnerGpeBean(null, clazz, null, useFor);
-	}
-
-	/**
-	 * 
-	 * @Description: 获取GpeBean对象
-	 * @param clazz
-	 * @param forbidSet
-	 * @return GpeBean
-	 * @author zhangq
-	 * @date 2017年9月22日
-	 */
-	public static GpeBean getGpeBean(Class<?> clazz, Set<String> forbidSet) {
-		return getOwnerGpeBean(null, clazz, forbidSet, UseFor.ALL);
-	}
-
-	/**
-	 * 
-	 * @Description: 获取GpeBean对象
-	 * @param clazz
-	 * @param forbidSet
-	 * @param useFor
-	 * @return GpeBean
-	 * @author zhangq
-	 * @date 2017年9月22日
-	 */
-	public static GpeBean getGpeBean(Class<?> clazz, Set<String> forbidSet, UseFor useFor) {
-		return getOwnerGpeBean(null, clazz, forbidSet, useFor);
-	}
-
-	/**
-	 * 
-	 * @Description: 获取GpeBean对象
-	 * @param clazz
-	 * @param userId
-	 * @return GpeBean
-	 * @author zhangq
-	 * @date 2017年9月22日
-	 */
-	public static GpeBean getOwnerGpeBean(String userId, Class<?> clazz) {
-		return getOwnerGpeBean(userId, clazz, null, UseFor.ALL);
-	}
-
-	/**
-	 * 
-	 * @Description: 获取GpeBean对象
-	 * @param userId
-	 * @param clazz
-	 * @param useFor
-	 * @return GpeBean
-	 * @author zhangq
-	 * @date 2017年9月22日
-	 */
-	public static GpeBean getOwnerGpeBean(String userId, Class<?> clazz, UseFor useFor) {
-		return getOwnerGpeBean(userId, clazz, null, useFor);
-	}
-
-	/**
-	 * 
-	 * @Description: 获取GpeBean对象
-	 * @param userId
-	 * @param clazz
-	 * @param forbidSet
-	 * @return GpeBean
-	 * @author zhangq
-	 * @date 2017年9月22日
-	 */
-	public static GpeBean getOwnerGpeBean(String userId, Class<?> clazz, Set<String> forbidSet) {
-		return getOwnerGpeBean(userId, clazz, forbidSet, UseFor.ALL);
-	}
-
-	/**
-	 * 
-	 * @Description: 获取GpeBean对象
-	 * @param userId
-	 * @param clazz
-	 * @param forbidSet
-	 * @param useFor
-	 * @return GpeBean
-	 * @author zhangq
-	 * @date 2017年9月22日
-	 */
-	public static GpeBean getOwnerGpeBean(String userId, Class<?> clazz, Set<String> forbidSet, UseFor useFor) {
-		logger.debug("进入GpeUtils->getOwnerGpeBean(),userId,:{},clazz:{},forbidSet:{},useFor:{}.", userId, clazz,
-				forbidSet, useFor);
+		logger.debug("进入GpeUtils->getGpeBean(),clazz:{},useFor:{}.", clazz, useFor);
 		
 		// 创建具体建造者对象
-		Builder builder = new ConcreteBuilder(clazz);
+		Builder builder = new ConcreteBuilder(clazz, useFor);
 		// 创造导演者角色，给定建造者对象
 		Director director = new Director(builder);
 		// 调用导演者角色，创建产品零件

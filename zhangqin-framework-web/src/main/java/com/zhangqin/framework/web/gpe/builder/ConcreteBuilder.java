@@ -3,6 +3,7 @@ package com.zhangqin.framework.web.gpe.builder;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
@@ -26,6 +27,7 @@ import com.zhangqin.framework.web.gpe.bean.analysis.GpeHeaderAnalysis;
 import com.zhangqin.framework.web.gpe.bean.result.UserColumnSetting;
 import com.zhangqin.framework.web.gpe.bean.result.UserColumnSettingField;
 import com.zhangqin.framework.web.gpe.enums.TextAlign;
+import com.zhangqin.framework.web.gpe.enums.UseFor;
 import com.zhangqin.framework.web.gpe.utils.AnalysisUtils;
 
 /**
@@ -39,6 +41,11 @@ public class ConcreteBuilder implements Builder {
 	 * 待解析的实体类Class
 	 */
 	private Class<?> clazz;
+	
+	/**
+	 * 解析用户
+	 */
+	private UseFor useFor;
 
 	/**
 	 * 万能的GPE对象
@@ -66,8 +73,9 @@ public class ConcreteBuilder implements Builder {
 	private static final String[] NUMBER_TYPES = { "int", "Integer", "short", "Short", "long", "Long", "float", "Float",
 			"BigDecimal", "Double" };
 
-	public ConcreteBuilder(Class<?> clazz) {
+	public ConcreteBuilder(Class<?> clazz,UseFor useFor) {
 		this.clazz = clazz;
+		this.useFor = useFor;
 	}
 
 	@Override
@@ -144,6 +152,9 @@ public class ConcreteBuilder implements Builder {
 				field.setPformat(property.getpDateFormat());
 				field.setEformat(property.geteDateFormat());
 			}
+			
+			// 是否隐藏
+			field.setHidden(false);
 		});
 
 	}
@@ -231,22 +242,23 @@ public class ConcreteBuilder implements Builder {
 	@Override
 	public void transformProcess() {
 		List<GpeFieldBean> needAdd = Lists.newArrayList();
-		gpe.getFields().forEach(field->{
+		gpe.getFields().forEach(field -> {
 			// 枚举处理
 			Field originalField = originalFieldsMap.get(field.getField());
-			if(BaseEnum.class.isAssignableFrom(originalField.getType())){
+			if (BaseEnum.class.isAssignableFrom(originalField.getType())) {
 				// 新增一个字段用于枚举描述展现
 				GpeFieldBean newField = new GpeFieldBean();
-				BeanMapper.copySkipNullAndEmpty(field, newField);;
-				newField.setField(field.getField()+"Desc");
+				BeanMapper.copySkipNullAndEmpty(field, newField);
+				;
+				newField.setField(field.getField() + "Desc");
 				newField.setAlign(TextAlign.LEFT);
 				newField.setHidden(false);
 				needAdd.add(newField);
-				
+
 				// 原字段隐藏
 				field.setHidden(true);
 			}
-			
+
 		});
 		gpe.getFields().addAll(needAdd);
 	}
@@ -278,6 +290,31 @@ public class ConcreteBuilder implements Builder {
 	
 	@Override
 	public void filterForbidFields() {
+		Iterator<GpeFieldBean> iterator = gpe.getFields().iterator();
+		while (iterator.hasNext()) {
+			GpeFieldBean field = iterator.next();
+			// 不显示
+			if (useFor.equals(UseFor.GRID) && !field.getGshow()) {
+				iterator.remove();
+				continue;
+			}
+			// 不打印
+			if (useFor.equals(UseFor.PRINT) && (!field.getPshow() || field.getHidden())) {
+				iterator.remove();
+				continue;
+			}
+			// 不导出
+			if (useFor.equals(UseFor.EXPORT) && (!field.getEshow() || field.getHidden())) {
+				iterator.remove();
+				continue;
+			}
+			// 设置不显示隐藏字段
+			if (field.getHidden()) {
+				iterator.remove();
+				continue;
+			}
+		}
+		
 //		String userId = GpeCacheManager.USER_THREAD_LOCAL.get();
 //		GpeRealm gpeDataInterface = SpringContextUtils.getBean(GpeRealm.class);
 //		Set<String> forbidFields = gpeDataInterface.getForbidFields(userId);
