@@ -43,8 +43,9 @@ public class Director {
 		builder.transformProcess();
 
 		// 使用用户配置覆盖GpeBean
-		//builder.coverByUserProperty();
+		builder.coverByUserProperty();
 		
+		// 权限过滤
 		builder.filterForbidFields();
 		
 		

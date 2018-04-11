@@ -1,5 +1,7 @@
 package com.zhangqin.framework.web.gpe.handler;
 
+import java.lang.reflect.Method;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,8 +23,9 @@ import com.zhangqin.framework.web.gpe.bean.result.UserColumnSetting;
  */
 public class SaveUserColumnSettingMethodHandler extends AbstractGpeMethodHandler<ResponseData<Boolean>> {
 
-	public SaveUserColumnSettingMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, String[] paths) {
-		super(annotation, mapping, paths);
+	public SaveUserColumnSettingMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, Method proxyMethod,
+			String... paths) {
+		super(annotation, mapping, proxyMethod, paths);
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class SaveUserColumnSettingMethodHandler extends AbstractGpeMethodHandler
 		GpeRealm realm = SpringContextUtils.getBean(GpeRealm.class);
 		
 		// 获取当前标记方法的信息作为key
-		String key = getMethod().toGenericString();
+		String key = getProxyMethod().toGenericString();
 		
 		// 获取列设置
 		String value = request.getParameter("setting");

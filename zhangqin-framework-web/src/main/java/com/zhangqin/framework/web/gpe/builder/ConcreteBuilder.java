@@ -268,7 +268,7 @@ public class ConcreteBuilder implements Builder {
 		GpeRealm realm = SpringContextUtils.getBean(GpeRealm.class);
 		String methodGenericInfo = GpeCacheManager.getMethodGenericInfo();
 		UserColumnSetting result = realm.getUserColumnSetting(methodGenericInfo);
-		if(null==result) {
+		if (null == result) {
 			return;
 		}
 		

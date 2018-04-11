@@ -22,6 +22,12 @@ public abstract class AbstractGpeMethodHandler<T> implements GpeMethodHandler<T>
 	 *      registerHandlerMethod(Object handler, Method method, T mapping)
 	 */
 	private Method method;
+	
+	/**
+	 * 被代理的方法
+	 */
+	private Method proxyMethod;
+	
 	/**
 	 * registerHandlerMethod方法中的mapping参数
 	 * 
@@ -36,6 +42,20 @@ public abstract class AbstractGpeMethodHandler<T> implements GpeMethodHandler<T>
 	 * @see com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping
 	 */
 	private GpeRequestMapping annotation;
+	
+	/**
+	 * 构造函数
+	 * 
+	 * @param annotation
+	 * @param mapping
+	 * @param proxyMethod
+	 * @param paths
+	 */
+	public AbstractGpeMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, Method proxyMethod,
+			String... paths) {
+		this(annotation, mapping, paths);
+		this.proxyMethod = proxyMethod;
+	}
 
 	/**
 	 * 构造函数
@@ -63,10 +83,6 @@ public abstract class AbstractGpeMethodHandler<T> implements GpeMethodHandler<T>
 		return method;
 	}
 
-	public void setMethod(Method method) {
-		this.method = method;
-	}
-
 	public RequestMappingInfo getMapping() {
 		return mapping;
 	}
@@ -87,4 +103,7 @@ public abstract class AbstractGpeMethodHandler<T> implements GpeMethodHandler<T>
 		return annotation.viewObject();
 	}
 
+	public Method getProxyMethod() {
+		return proxyMethod;
+	}
 }

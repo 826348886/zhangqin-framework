@@ -43,10 +43,6 @@ import com.zhangqin.framework.web.gpe.utils.GpeUtils;
  *
  */
 public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo<Map<String, Object>>> {
-	/**
-	 * 目标方法
-	 */
-	private Method targetMethod;
 
 	/**
 	 * 构造方法
@@ -56,20 +52,19 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 	 * @param paths
 	 * @param targetMethod
 	 */
-	public FindListPageMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, String[] paths,
-			Method targetMethod) {
-		super(annotation, mapping, paths);
-		this.targetMethod = targetMethod;
+	public FindListPageMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, Method proxyMethod,
+			String... paths) {
+		super(annotation, mapping, proxyMethod, paths);
 	}
 
 	@Override
 	@ResponseBody
 	public PageInfo<Map<String, Object>> handler(HttpServletRequest request, HttpServletResponse response) {
 
-		Class<?> targetClass = this.targetMethod.getDeclaringClass();
+		Class<?> targetClass = getProxyMethod().getDeclaringClass();
 		Object obj = SpringContextUtils.getBean(targetClass);
 
-		ServletInvocableHandlerMethod handler = new ServletInvocableHandlerMethod(obj, targetMethod);
+		ServletInvocableHandlerMethod handler = new ServletInvocableHandlerMethod(obj, getProxyMethod());
 		GpeRequestMappingHandlerAdapter adapter = SpringContextUtils.getBean(GpeRequestMappingHandlerAdapter.class);
 		try {
 			PageInfo<?> pageInfo = (PageInfo<?>) adapter.invokeForRequest(request, response, handler);

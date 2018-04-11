@@ -18,16 +18,16 @@ public class MethodHandlerChainConfig {
 
 		List<AbstractGpeMethodHandler<?>> chainList = Arrays.asList(new AbstractGpeMethodHandler[] {
 			// 注册findGridResult方法
-			new FindGridResultMethodHandler(annotation, mapping, new String[] { "gpe/findGridResult" }),
+			new FindGridResultMethodHandler(annotation, mapping, method, "gpe/findGridResult"),
 			// 注册findListPage方法替代原来的查询分页方法
-			new FindListPageMethodHandler(annotation, mapping, new String[] { "gpe/findListPage" }, method),
-			
+			new FindListPageMethodHandler(annotation, mapping, method, "gpe/findListPage"),
+
 			// 注册findColSetting方法
-			new FindUserColumnSettingMethodHandler(annotation, mapping, new String[] { "gpe/findColumnSetting" }),
+			new FindUserColumnSettingMethodHandler(annotation, mapping, method, "gpe/findColumnSetting"),
 			// 注册saveColumnSetting方法
-			new SaveUserColumnSettingMethodHandler(annotation, mapping, new String[] { "gpe/saveColumnSetting" }),
+			new SaveUserColumnSettingMethodHandler(annotation, mapping, method, "gpe/saveColumnSetting"),
 			// 注册restoreUserColumnSetting方法
-			new RestoreUserColumnSettingMethodHandler(annotation, mapping, new String[] { "gpe/restoreColumnSetting" }),
+			new RestoreUserColumnSettingMethodHandler(annotation, mapping, method, "gpe/restoreColumnSetting"),
 			
 			// 注册export方法
 			new ExportMethodHandler(annotation, mapping, new String[] { "gpe/export" }, method)
