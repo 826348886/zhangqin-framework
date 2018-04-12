@@ -68,10 +68,6 @@ public class GpeRequestMappingHandlerMapping extends RequestMappingHandlerMappin
 			return;
 		}
 		
-		// 方法全路径
-		String methodKey = method.toGenericString();
-		
-		
 		// 获取GpeRequestMapping注解
 		GpeRequestMapping annotation = method.getAnnotation(GpeRequestMapping.class);
 		

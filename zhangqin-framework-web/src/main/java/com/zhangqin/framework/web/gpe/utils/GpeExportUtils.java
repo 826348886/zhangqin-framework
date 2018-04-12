@@ -296,12 +296,16 @@ public class GpeExportUtils {
 				// 获取注解字段值
 				GpeFieldBean gpeField = gpe.getFields().get(i);
 				Field originalField = fieldMap.get(gpeField.getField());
-				Object value = originalField.get(t);
 				
 				// 创建单元格
 				XSSFCell cell = row.createCell(i + 1);
 				cell.setCellStyle(styleList.get(i + 1));
+				
 				// 设置单元格的值
+				if (null == originalField) {
+					continue;
+				}
+				Object value = originalField.get(t);
 				setCellValue(cell, gpeField, originalField, value);
 				// 计算合计值
 				calcSumValue(gpeField, originalField, footerMap, i, value);

@@ -59,6 +59,7 @@ public class AnalysisUtils {
 				}
 				
 				if (!exists && !field.getName().equals("serialVersionUID")) {
+					field.setAccessible(true);
 					fieldList.add(field);
 				}
 			}
@@ -137,14 +138,7 @@ public class AnalysisUtils {
 		List<GpeFieldAnalysis> beanList = new ArrayList<GpeFieldAnalysis>();
 
 		// 获取子类和父类的所有Field
-		List<Field> fieldList = new ArrayList<Field>();
-		Class<?> tempClass = clazz;
-		while (null != tempClass) {
-			// 获取tempClass的所有Field
-			fieldList.addAll(Arrays.asList(tempClass.getDeclaredFields()));
-			// 得到父类,然后赋给自己
-			tempClass = tempClass.getSuperclass();
-		}
+		List<Field> fieldList = analysisOriginalFields(clazz,true);
 
 		// 遍历所有字段，解析注解
 		fieldList.stream().forEach(field->{

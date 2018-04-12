@@ -10,6 +10,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zhangqin.framework.common.enums.BaseEnum;
@@ -173,6 +175,14 @@ public class ConcreteBuilder implements Builder {
 				return;
 			}
 			BeanMapper.copySkipNullAndEmpty(property, field);
+
+			// 覆盖宽度
+			if (null != property.getWidth() && property.getWidth() >= 0) {
+				field.setGwidth(property.getWidth());
+				field.setPwidth(property.getWidth());
+				field.setEwidth(property.getWidth());
+			}
+			
 		});
 	}
 
@@ -309,10 +319,16 @@ public class ConcreteBuilder implements Builder {
 				continue;
 			}
 			// 设置不显示隐藏字段
-			if (field.getHidden()) {
+			if (useFor.equals(UseFor.SETTING) && field.getHidden()) {
 				iterator.remove();
 				continue;
 			}
+			
+			// title为空时，取field字段作为title
+			if(StringUtils.isBlank(field.getTitle())) {
+				field.setTitle(field.getField());
+			}
+			
 		}
 		
 //		String userId = GpeCacheManager.USER_THREAD_LOCAL.get();
