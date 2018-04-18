@@ -100,7 +100,7 @@ public class GpeExportUtils {
 			rowNo = createTitileRow(gpe, sheet, rowNo,headerStyle);
 
 			// 创建表头行
-			rowNo = createHeanderRow(gpe, sheet, rowNo,headerStyle);
+			rowNo = createHeaderRow(gpe, sheet, rowNo,headerStyle);
 			
 			// 创建内容行
 			rowNo = createContentRow(clazz, gpe, sheet, list, styleList, rowNo);
@@ -167,7 +167,7 @@ public class GpeExportUtils {
 	 * @param sheet
 	 * @param rowNo
 	 */
-	private static int createHeanderRow(GpeBean gpe, XSSFSheet sheet, int rowNo,XSSFCellStyle headerStyle) {
+	private static int createHeaderRow(GpeBean gpe, XSSFSheet sheet, int rowNo,XSSFCellStyle headerStyle) {
 		// 转为二维数组
 		List<List<GpeFieldBean>> twoDimensionalList = GpeUtils.convertToTwoDimensionalList(gpe.getFields());
 		

@@ -164,6 +164,12 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 			map.put(originalField.getName(), value);
 			return;
 		}
+		
+		// value为空
+		if (null == value) {
+			map.put(originalField.getName(), value);
+			return;
+		}
 
 		// 字段类型
 		Class<?> type = originalField.getType();
@@ -181,7 +187,7 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 		if (BigDecimal.class.isAssignableFrom(type)) {
 			// 格式化BigDecimal
 			int scale = gformat.substring(gformat.lastIndexOf(".") - 1).length();
-			BigDecimal decimal = BigDecimal.valueOf((Double) value);
+			BigDecimal decimal = (BigDecimal) value;
 			String decimalstr = decimal.setScale(scale, RoundingMode.HALF_UP).toString();
 			map.put(originalField.getName(), decimalstr);
 			return;

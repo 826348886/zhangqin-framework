@@ -29,6 +29,11 @@ public class MethodHandlerChainConfig {
 			// 注册restoreUserColumnSetting方法
 			new RestoreUserColumnSettingMethodHandler(annotation, mapping, method, "gpe/restoreColumnSetting"),
 			
+			// 注册findPrintHeader方法，查询打印表头
+			new FindPrintHeaderMethodHandler(annotation, mapping, method, "gpe/findPrintHeader"),
+			// 注册findPrintHeader方法，查询打印列表数据
+			new FindPrintListMethodHandler(annotation, mapping, method, "gpe/findPrintList"),
+			
 			// 注册export方法
 			new ExportMethodHandler(annotation, mapping, new String[] { "gpe/export" }, method)
 		});

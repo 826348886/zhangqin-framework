@@ -12,16 +12,16 @@ import com.zhangqin.framework.common.entity.ResponseData;
 import com.zhangqin.framework.common.enums.ResponseCodeEnum;
 import com.zhangqin.framework.web.gpe.GpeCacheManager;
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
-import com.zhangqin.framework.web.gpe.bean.result.GridResult;
-import com.zhangqin.framework.web.gpe.utils.GpeGridUtils;
+import com.zhangqin.framework.web.gpe.bean.result.PrintHeader;
+import com.zhangqin.framework.web.gpe.utils.GpePrintUtils;
 
 /**
- * findGridResult方法Handler
+ * findPrintHeader方法Handler
  * 
  * @author zhangqin
  *
  */
-public class FindGridResultMethodHandler extends AbstractGpeMethodHandler<ResponseData<GridResult>> {
+public class FindPrintHeaderMethodHandler extends AbstractGpeMethodHandler<ResponseData<PrintHeader>> {
 
 	/**
 	 * 构造函数
@@ -31,20 +31,22 @@ public class FindGridResultMethodHandler extends AbstractGpeMethodHandler<Respon
 	 * @param proxyMethod
 	 * @param paths
 	 */
-	public FindGridResultMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, Method proxyMethod,
+	public FindPrintHeaderMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, Method proxyMethod,
 			String... paths) {
 		super(annotation, mapping, proxyMethod, paths);
 	}
 
-	/**
-	 * 方法Handler
-	 */
 	@Override
 	@ResponseBody
-	public ResponseData<GridResult> handler(HttpServletRequest request, HttpServletResponse response) {
+	public ResponseData<PrintHeader> handler(HttpServletRequest request, HttpServletResponse response) {
 		// 设置代理方法的基本信息，用于唯一定位当前功能路径
 		GpeCacheManager.setMethodGenericInfo(getProxyMethod().toGenericString());
-		GridResult result = GpeGridUtils.getGridResult(getAnnotation().viewObject());
-		return new ResponseData<GridResult>(ResponseCodeEnum.SUCCESS, result);
+
+		// 获取打印表头信息
+		PrintHeader header = GpePrintUtils.getPrintHeader(getAnnotation().viewObject());
+
+		// 返回结果
+		return new ResponseData<PrintHeader>(ResponseCodeEnum.SUCCESS, header);
 	}
+
 }

@@ -1,6 +1,7 @@
 package com.zhangqin.framework.dal.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
 
 /**
  * 多租户实体类基类 用于使用tenant_id字段方式实现多租户的场景，利用数据库schame方式实现的多租户的场景不适用
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
  * @author zhangqin
  *
  */
+@TableName("sys_tenant")
 public class TenantEntity extends BaseEntity {
 	/**
 	 * serialVersionUID

@@ -21,7 +21,7 @@ public class GridResult implements Serializable {
 	/**
 	 * 冻结列二维集合
 	 */
-	private List<List<ColumnResult>> forzenColumns;
+	private List<List<ColumnResult>> frozenColumns;
 
 	public List<List<ColumnResult>> getColumns() {
 		return columns;
@@ -31,21 +31,12 @@ public class GridResult implements Serializable {
 		this.columns = columns;
 	}
 
-	public List<List<ColumnResult>> getForzenColumns() {
-		return forzenColumns;
+	public List<List<ColumnResult>> getFrozenColumns() {
+		return frozenColumns;
 	}
 
-	public void setForzenColumns(List<List<ColumnResult>> forzenColumns) {
-		this.forzenColumns = forzenColumns;
+	public void setFrozenColumns(List<List<ColumnResult>> frozenColumns) {
+		this.frozenColumns = frozenColumns;
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "MutilGridColumnsResult [columns=" + columns + ", forzenColumns=" + forzenColumns + "]";
-	}
 }

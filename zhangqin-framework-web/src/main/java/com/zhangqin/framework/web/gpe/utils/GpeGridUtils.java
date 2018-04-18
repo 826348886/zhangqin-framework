@@ -15,6 +15,11 @@ import com.zhangqin.framework.web.gpe.bean.result.ColumnResult;
 import com.zhangqin.framework.web.gpe.bean.result.GridResult;
 import com.zhangqin.framework.web.gpe.enums.UseFor;
 
+/**
+ * GPE网格工具类
+ * @author zhangqin
+ *
+ */
 public class GpeGridUtils {
 	/**
 	 * Logger
@@ -96,7 +101,7 @@ public class GpeGridUtils {
 		// 用一个数组封装这2个二维数组（需要对formatter特殊处理，使用对象或map形式会导致页面JSON.parse()或eval()失败）
 		GridResult result = new GridResult();
 		result.setColumns(convertToTwoDimensionalGridColumnBeanList(normalTwoDimensionalList));
-		result.setForzenColumns(convertToTwoDimensionalGridColumnBeanList(frozenTwoDimensionalList));
+		result.setFrozenColumns(convertToTwoDimensionalGridColumnBeanList(frozenTwoDimensionalList));
 		return result;
 	}
 	
