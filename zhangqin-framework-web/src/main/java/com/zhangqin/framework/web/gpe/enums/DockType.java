@@ -26,12 +26,20 @@ public enum DockType implements BaseEnum<DockType, String> {
 	/**
 	 * 扩展3
 	 */
-	DOCK_3("dock_3", "扩展1"),
+	DOCK_3("dock_3", "扩展3"),
 	/**
-	 * EasyUI formatter扩展
-	 * 被该值标记的字段，生成网格时，额外增加formatter方法
+	 * EasyUI formatter扩展 被该值标记的字段，生成网格时，额外增加formatter方法
 	 */
-	EASYUI_FORMATTER("easyui_formatter", "EasyUI formatter扩展");
+	EASYUI_FORMATTER("easyui_formatter", "EasyUI formatter扩展"),
+	/**
+	 * EasyUI editor扩展 被该值标记的字段，生成网格时，额外增加editor方法
+	 */
+	EASYUI_EDITOR("easyui_editor", "EasyUI editor扩展"),
+	/**
+	 * EasyUI styler扩展 被该值标记的字段，生成网格时，额外增加styler方法
+	 */
+	EASYUI_STYLER("easyui_styler","EasyUI styler扩展");
+
 	/**
 	 * 
 	 * <p>Title: 构造方法</p> 
