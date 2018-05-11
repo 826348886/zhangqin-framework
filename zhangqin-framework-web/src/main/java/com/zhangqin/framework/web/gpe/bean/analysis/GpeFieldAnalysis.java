@@ -3,8 +3,8 @@ package com.zhangqin.framework.web.gpe.bean.analysis;
 import java.io.Serializable;
 import java.util.List;
 
-import com.zhangqin.framework.web.gpe.enums.DockType;
-import com.zhangqin.framework.web.gpe.enums.TextAlign;
+import com.zhangqin.framework.gpe.enums.DockType;
+import com.zhangqin.framework.gpe.enums.TextAlign;
 
 /**
  * @GpeField注解解析类

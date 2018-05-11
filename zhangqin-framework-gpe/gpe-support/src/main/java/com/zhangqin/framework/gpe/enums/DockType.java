@@ -1,4 +1,4 @@
-package com.zhangqin.framework.web.gpe.enums;
+package com.zhangqin.framework.gpe.enums;
 
 import com.zhangqin.framework.common.enums.BaseEnum;
 

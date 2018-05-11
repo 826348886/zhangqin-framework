@@ -8,12 +8,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zhangqin.framework.gpe.enums.TextAlign;
 import com.zhangqin.framework.web.gpe.bean.GpeBean;
 import com.zhangqin.framework.web.gpe.bean.GpeFieldBean;
 import com.zhangqin.framework.web.gpe.builder.Builder;
 import com.zhangqin.framework.web.gpe.builder.ConcreteBuilder;
 import com.zhangqin.framework.web.gpe.builder.Director;
-import com.zhangqin.framework.web.gpe.enums.TextAlign;
 import com.zhangqin.framework.web.gpe.enums.UseFor;
 
 /**

@@ -1,8 +1,6 @@
-package com.zhangqin.framework.web.gpe;
+package com.zhangqin.framework.gpe;
 
-import com.zhangqin.framework.web.common.utils.SpringContextUtils;
-import com.zhangqin.framework.web.gpe.bean.GpeGlobalPropertyBean;
-import com.zhangqin.framework.web.gpe.enums.TextAlign;
+import com.zhangqin.framework.gpe.enums.TextAlign;
 
 /**
  * GPE默认属性配置策略
@@ -13,11 +11,13 @@ public class GpeDefaultPropertyStrategy implements GpePropertyStrategy {
 
 	@Override
 	public GpeGlobalPropertyBean getPropertyBean() {
-		GpeGlobalPropertyBean defaultGpeProperty = SpringContextUtils.getBean("defaultGpeProperty");
-		if (null == defaultGpeProperty) {
-			defaultGpeProperty = getDefaultProperty();
-		}
-		return defaultGpeProperty;
+//		GpeGlobalPropertyBean defaultGpeProperty = SpringContextUtils.getBean("defaultGpeProperty");
+//		if (null == defaultGpeProperty) {
+//			defaultGpeProperty = getDefaultProperty();
+//		}
+//		return defaultGpeProperty;
+		
+		return getDefaultProperty();
 	}
 
 	/**

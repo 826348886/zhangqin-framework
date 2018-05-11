@@ -1,8 +1,8 @@
-package com.zhangqin.framework.web.gpe.bean;
+package com.zhangqin.framework.gpe;
 
 import java.io.Serializable;
 
-import com.zhangqin.framework.web.gpe.enums.TextAlign;
+import com.zhangqin.framework.gpe.enums.TextAlign;
 
 /**
  * GPE全局属性配置Bean

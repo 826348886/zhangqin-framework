@@ -1,4 +1,4 @@
-package com.zhangqin.framework.web.gpe.annotation;
+package com.zhangqin.framework.gpe.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

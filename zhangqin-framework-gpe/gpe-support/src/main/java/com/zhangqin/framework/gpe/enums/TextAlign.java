@@ -1,11 +1,11 @@
-package com.zhangqin.framework.web.gpe.enums;
+package com.zhangqin.framework.gpe.enums;
 
 import com.zhangqin.framework.common.enums.BaseEnum;
 
 /**
  * 
- * ClassName: BoolValue 
- * @Description: 布尔值枚举
+ * ClassName: TextAlign 
+ * @Description: 对齐方式枚举
  * @author zhangqin
  * @date 2018年1月15日
  *
@@ -14,19 +14,23 @@ import com.zhangqin.framework.common.enums.BaseEnum;
  * ----------------+----------------+-------------------+-------------------------------------------
  *
  */
-public enum BoolValue implements BaseEnum<TextAlign, Boolean> {
+public enum TextAlign implements BaseEnum<TextAlign, String> {
 	/**
-	 * false
+	 * 左对齐
 	 */
-	FALSE(false, "否"),
+	LEFT("left", "左对齐"),
 	/**
-	 * true
+	 * 居中对齐
 	 */
-	TRUE(true, "true"),
+	CENTER("center", "居中对齐"),
 	/**
-	 * null
+	 * 右对齐
 	 */
-	NULL(null, "未设置");
+	RIGHT("right", "右对齐"),
+	/**
+	 * 未设置，使用默认
+	 */
+	NULL("null", "未设置");
 	/**
 	 * 
 	 * <p>Title: 构造方法</p> 
@@ -34,7 +38,7 @@ public enum BoolValue implements BaseEnum<TextAlign, Boolean> {
 	 * @param value
 	 * @param desc
 	 */
-	BoolValue(Boolean value, String desc) {
+	TextAlign(String value, String desc) {
 		this.value = value;
 		this.desc = desc;
 	}
@@ -42,7 +46,7 @@ public enum BoolValue implements BaseEnum<TextAlign, Boolean> {
 	/**
 	 * 枚举编号
 	 */
-	private Boolean value;
+	private String value;
 	/**
 	 * 枚举描述
 	 */
@@ -53,7 +57,7 @@ public enum BoolValue implements BaseEnum<TextAlign, Boolean> {
 	 * @see com.zhangqin.framework.common.enums.BaseEnum#code()
 	 */
 	@Override
-	public Boolean getValue() {
+	public String getValue() {
 		return value;
 	}
 
@@ -64,31 +68,5 @@ public enum BoolValue implements BaseEnum<TextAlign, Boolean> {
 	@Override
 	public String getDesc() {
 		return desc;
-	}
-	
-	/**
-	 * 
-	 * @Description: 枚举转换为Boolean对象
-	 * @return Boolean  
-	 * @author zhangqin
-	 * @date 2017年9月27日
-	 */
-	public Boolean convertToBoolean() {
-		Boolean bool = null;
-		switch (this.name().toUpperCase()) {
-			case "FALSE":
-				bool = false;
-				break;
-			case "TRUE":
-				bool = true;
-				break;
-			case "NULL":
-				bool = null;
-				break;
-			default:
-				bool = null;
-				break;
-		}
-		return bool;
 	}
 }

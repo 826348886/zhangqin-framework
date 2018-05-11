@@ -8,9 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zhangqin.framework.common.utils.BeanMapper;
+import com.zhangqin.framework.gpe.GpeGlobalPropertyBean;
+import com.zhangqin.framework.gpe.GpePropertyStrategy;
 import com.zhangqin.framework.web.gpe.bean.GpeBean;
 import com.zhangqin.framework.web.gpe.bean.GpeFieldPropertyBean;
-import com.zhangqin.framework.web.gpe.bean.GpeGlobalPropertyBean;
 
 /**
  * GPE缓存管理

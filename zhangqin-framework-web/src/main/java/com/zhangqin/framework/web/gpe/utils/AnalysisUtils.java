@@ -7,13 +7,13 @@ import java.util.List;
 
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
+import com.zhangqin.framework.gpe.GpeDefaultPropertyStrategy;
+import com.zhangqin.framework.gpe.GpeGlobalPropertyBean;
+import com.zhangqin.framework.gpe.GpePropertyStrategy;
+import com.zhangqin.framework.gpe.annotation.GpeField;
+import com.zhangqin.framework.gpe.annotation.GpeHeader;
+import com.zhangqin.framework.gpe.annotation.GpeProperty;
 import com.zhangqin.framework.web.gpe.GpeCacheManager;
-import com.zhangqin.framework.web.gpe.GpeDefaultPropertyStrategy;
-import com.zhangqin.framework.web.gpe.GpePropertyStrategy;
-import com.zhangqin.framework.web.gpe.annotation.GpeField;
-import com.zhangqin.framework.web.gpe.annotation.GpeHeader;
-import com.zhangqin.framework.web.gpe.annotation.GpeProperty;
-import com.zhangqin.framework.web.gpe.bean.GpeGlobalPropertyBean;
 import com.zhangqin.framework.web.gpe.bean.analysis.GpeFieldAnalysis;
 import com.zhangqin.framework.web.gpe.bean.analysis.GpeHeaderAnalysis;
 

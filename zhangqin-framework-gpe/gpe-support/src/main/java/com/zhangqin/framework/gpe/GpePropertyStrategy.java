@@ -1,6 +1,4 @@
-package com.zhangqin.framework.web.gpe;
-
-import com.zhangqin.framework.web.gpe.bean.GpeGlobalPropertyBean;
+package com.zhangqin.framework.gpe;
 
 /**
  * GPE属性配置策略

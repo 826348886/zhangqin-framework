@@ -2,7 +2,7 @@ package com.zhangqin.framework.web.gpe.bean;
 
 import java.io.Serializable;
 
-import com.zhangqin.framework.web.gpe.enums.TextAlign;
+import com.zhangqin.framework.gpe.enums.TextAlign;
 
 /**
  * 字段属性配置Bean

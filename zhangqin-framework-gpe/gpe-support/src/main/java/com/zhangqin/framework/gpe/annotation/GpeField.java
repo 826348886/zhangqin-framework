@@ -1,13 +1,13 @@
-package com.zhangqin.framework.web.gpe.annotation;
+package com.zhangqin.framework.gpe.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.zhangqin.framework.web.gpe.enums.BoolValue;
-import com.zhangqin.framework.web.gpe.enums.DockType;
-import com.zhangqin.framework.web.gpe.enums.TextAlign;
+import com.zhangqin.framework.gpe.enums.BoolValue;
+import com.zhangqin.framework.gpe.enums.DockType;
+import com.zhangqin.framework.gpe.enums.TextAlign;
 
 /**
  * 

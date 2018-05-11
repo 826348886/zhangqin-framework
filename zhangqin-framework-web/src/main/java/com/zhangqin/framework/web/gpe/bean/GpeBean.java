@@ -3,6 +3,8 @@ package com.zhangqin.framework.web.gpe.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import com.zhangqin.framework.gpe.GpeGlobalPropertyBean;
+
 /**
  * 
  * ClassName: GpeBean 
