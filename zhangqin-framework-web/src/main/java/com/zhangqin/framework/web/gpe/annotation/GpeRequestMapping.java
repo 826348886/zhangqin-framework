@@ -40,4 +40,11 @@ public @interface GpeRequestMapping {
 	 * @return
 	 */
 	Class<?> viewObject();
+	
+	/**
+	 * 需解析的实体类Class
+	 * 
+	 * @return
+	 */
+	Class<?> queryClass() default Class.class;
 }

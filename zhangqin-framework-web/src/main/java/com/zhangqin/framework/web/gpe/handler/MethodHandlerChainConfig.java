@@ -36,6 +36,12 @@ public class MethodHandlerChainConfig {
 			
 			// 注册export方法
 			new ExportMethodHandler(annotation, mapping, new String[] { "gpe/export" }, method)
+			
+			// 查询自定义查询列表 gpe/findAdvancedSearchList
+			// 查询高级查询字段列表  gpe/findAdvancedSearchFieldList
+			
+			// 保存自定义查询条件 gpe/saveAdvancedSearch
+			// 删除自定义查询条件 gpe/deleteAdvancedSearch
 		});
 		return chainList;
 	}

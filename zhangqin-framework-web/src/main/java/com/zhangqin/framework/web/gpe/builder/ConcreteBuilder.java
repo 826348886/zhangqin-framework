@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
@@ -331,19 +333,18 @@ public class ConcreteBuilder implements Builder {
 			
 		}
 		
-//		String userId = GpeCacheManager.USER_THREAD_LOCAL.get();
-//		GpeRealm gpeDataInterface = SpringContextUtils.getBean(GpeRealm.class);
-//		Set<String> forbidFields = gpeDataInterface.getForbidFields(userId);
-//		if(CollectionUtils.isEmpty(forbidFields)) {
-//			return ;
-//		}
-//		Iterator<GpeFieldBean> iterator = gpe.getFields().iterator();
-//		while(iterator.hasNext()) {
-//			GpeFieldBean field = iterator.next();
-//			if(forbidFields.contains(field.getField())) {
-//				iterator.remove();
-//			}
-//		}
+		GpeRealm gpeDataInterface = SpringContextUtils.getBean(GpeRealm.class);
+		Set<String> forbidFields = gpeDataInterface.getForbidFields(null);
+		if(CollectionUtils.isEmpty(forbidFields)) {
+			return ;
+		}
+		Iterator<GpeFieldBean> iterator1 = gpe.getFields().iterator();
+		while(iterator1.hasNext()) {
+			GpeFieldBean field = iterator1.next();
+			if(forbidFields.contains(field.getField())) {
+				iterator1.remove();
+			}
+		}
 	}
 
 
