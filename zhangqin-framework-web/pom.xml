@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.zhangqin.framework</groupId>
 		<artifactId>zhangqin-framework</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>zhangqin-framework-web</artifactId>
@@ -13,10 +13,6 @@
 	<name>基础框架-WEB框架</name>
 	<description>基础框架-WEB框架</description>
 
-	<properties>
-		<zhangqin.framework.version>0.0.1-SNAPSHOT</zhangqin.framework.version>
-	</properties>
-	
 	<dependencies>
 		<!-- spring boot -->
 		<dependency>
@@ -136,12 +132,12 @@
 		<dependency>
 			<groupId>com.zhangqin.framework</groupId>
 			<artifactId>zhangqin-framework-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	  	<dependency>
 	  		<groupId>com.zhangqin.framework</groupId>
 	  		<artifactId>gpe-support</artifactId>
-	  		<version>${zhangqin.framework.version}</version>
+	  		<version>${project.version}</version>
 	  	</dependency>
 	</dependencies>
 

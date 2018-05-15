@@ -14,6 +14,8 @@ import org.apache.ibatis.plugin.Signature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zhangqin.framework.common.dubbo.TenantSelector;
+
 @Intercepts({
 		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
 public class SchemaInterceptor implements Interceptor {
