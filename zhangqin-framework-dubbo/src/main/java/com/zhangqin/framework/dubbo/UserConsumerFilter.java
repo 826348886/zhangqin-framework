@@ -1,4 +1,4 @@
-package com.zhangqin.framework.web.dubbo;
+package com.zhangqin.framework.dubbo;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,7 +10,6 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
-import com.zhangqin.framework.common.BaseConstants;
 import com.zhangqin.framework.common.dubbo.UserSelector;
 
 /**

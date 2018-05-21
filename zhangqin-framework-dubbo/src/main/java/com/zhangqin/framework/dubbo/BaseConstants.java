@@ -1,4 +1,4 @@
-package com.zhangqin.framework.common;
+package com.zhangqin.framework.dubbo;
 
 /**
  * 常量

@@ -46,6 +46,7 @@
 		<module>zhangqin-framework-dal</module>
 		<module>zhangqin-framework-service</module>
 		<module>zhangqin-framework-gpe</module>
+		<module>zhangqin-framework-dubbo</module>
 	</modules>
 	
 	<!-- 构建 -->

@@ -1,4 +1,4 @@
-package com.zhangqin.framework.service.dubbo;
+package com.zhangqin.framework.dubbo;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.extension.Activate;
@@ -8,7 +8,6 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
-import com.zhangqin.framework.common.BaseConstants;
 import com.zhangqin.framework.common.dubbo.TenantSelector;
 import com.zhangqin.framework.common.dubbo.UserSelector;
 

@@ -134,6 +134,11 @@
 			<artifactId>zhangqin-framework-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.zhangqin.framework</groupId>
+			<artifactId>zhangqin-framework-dubbo</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	  	<dependency>
 	  		<groupId>com.zhangqin.framework</groupId>
 	  		<artifactId>gpe-support</artifactId>
