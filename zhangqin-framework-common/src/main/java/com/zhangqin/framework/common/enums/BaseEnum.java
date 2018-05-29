@@ -1,5 +1,6 @@
 package com.zhangqin.framework.common.enums;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  *
  */
 @JsonSerialize(using = BaseEnumSerializer.class)
+@JsonDeserialize(using = BaseEnumDeserializer.class)
 public interface BaseEnum<E extends Enum<?>, T> {
 	/**
 	 * 

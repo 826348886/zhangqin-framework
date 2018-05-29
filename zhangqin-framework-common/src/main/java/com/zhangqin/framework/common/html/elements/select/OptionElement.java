@@ -1,20 +1,14 @@
-package com.zhangqin.framework.common.entity;
+package com.zhangqin.framework.common.html.elements.select;
 
 import java.io.Serializable;
 
 /**
- * 
- * ClassName: EnumOption 
- * @Description: 枚举项
+ * HTML Select元素的Option标签
  * @author zhangqin
- * @date 2017年12月23日
  *
- * =================================================================================================
- *     Task ID			  Date			     Author		      Description
- * ----------------+----------------+-------------------+-------------------------------------------
- *
+ * @param <T>
  */
-public class EnumOption<T> implements Serializable {
+public class OptionElement<T> implements Serializable {
 
 	/**
 	 * @Fields serialVersionUID : serialVersionUID
@@ -26,7 +20,7 @@ public class EnumOption<T> implements Serializable {
 	 * <p>Title: 构造函数</p>
 	 * <p>Description: </p>
 	 */
-	public EnumOption() {
+	public OptionElement() {
 
 	}
 
@@ -37,7 +31,7 @@ public class EnumOption<T> implements Serializable {
 	 * @param text
 	 * @param value
 	 */
-	public EnumOption(String text, T value) {
+	public OptionElement(String text, T value) {
 		this.text = text;
 		this.value = value;
 	}

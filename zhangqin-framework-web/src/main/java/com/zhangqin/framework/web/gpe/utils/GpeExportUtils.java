@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
+import com.zhangqin.framework.common.enums.BaseEnum;
 import com.zhangqin.framework.web.gpe.bean.GpeBean;
 import com.zhangqin.framework.web.gpe.bean.GpeFieldBean;
 import com.zhangqin.framework.web.gpe.enums.UseFor;
@@ -272,19 +273,20 @@ public class GpeExportUtils {
 	private static int createContentRow(Class<?> clazz,GpeBean gpe, XSSFSheet sheet, List<?> list,List<XSSFCellStyle> styleList, int rowNo) throws IllegalArgumentException, IllegalAccessException {
 		Map<Integer,Object> footerMap = Maps.newHashMap();
 		
+		// 反射获取所有所有属性的值，保存到Map中
+		Map<String, Field> fieldMap = new HashMap<String, Field>();
+		Field[] fields = clazz.getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+			fieldMap.put(field.getName(), field);
+		}
+		
 		// 创建明细
 		int no = 1;
 		for (Object t : list) {
 			// 新建数据行
 			XSSFRow row = sheet.createRow(rowNo);
 			rowNo++;
-			// 反射获取所有所有属性的值，保存到Map中
-			Map<String, Field> fieldMap = new HashMap<String, Field>();
-			Field[] fields = clazz.getDeclaredFields();
-			for (Field field : fields) {
-				field.setAccessible(true);
-				fieldMap.put(field.getName(), field);
-			}
 			
 			// 创建序号cell
 			XSSFCell rowNoCell = row.createCell(0);
@@ -297,14 +299,20 @@ public class GpeExportUtils {
 				GpeFieldBean gpeField = gpe.getFields().get(i);
 				Field originalField = fieldMap.get(gpeField.getField());
 				
-				// 创建单元格
-				XSSFCell cell = row.createCell(i + 1);
-				cell.setCellStyle(styleList.get(i + 1));
+				// 枚举值找到于是的字段
+				if (null == originalField && gpeField.getField().endsWith("Desc")) {
+					originalField = fieldMap.get(gpeField.getField().substring(0, gpeField.getField().indexOf("Desc")));
+				}
 				
 				// 设置单元格的值
 				if (null == originalField) {
 					continue;
 				}
+				
+				// 创建单元格
+				XSSFCell cell = row.createCell(i + 1);
+				cell.setCellStyle(styleList.get(i + 1));
+				
 				Object value = originalField.get(t);
 				setCellValue(cell, gpeField, originalField, value);
 				// 计算合计值
@@ -339,8 +347,25 @@ public class GpeExportUtils {
 	 * @param originalField
 	 * @param value
 	 */
+	@SuppressWarnings("unchecked")
 	private static void setCellValue(XSSFCell cell,GpeFieldBean gpeField, Field originalField,Object value) {
 		if (null == value) {
+			return;
+		}
+		
+		// 字段类型
+		Class<?> type = originalField.getType();
+		
+		// 枚举类型
+		if (BaseEnum.class.isAssignableFrom(type)) {
+			try {
+				BaseEnum<? extends Enum<?>, ?> en = (BaseEnum<? extends Enum<?>, ?>) value;
+				if (null != en) {
+					cell.setCellValue(en.getDesc());
+				}
+			} catch (Exception e) {
+				logger.error("导出枚举值失败:{}", e);
+			}
 			return;
 		}
 		

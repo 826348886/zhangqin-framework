@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -62,7 +63,7 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 		GpeRequestMappingHandlerAdapter adapter = SpringContextUtils.getBean(GpeRequestMappingHandlerAdapter.class);
 		try {
 			PageInfo<?> pageInfo = (PageInfo<?>) adapter.invokeForRequest(request, response, handler);
-			if (null == pageInfo) {
+			if (null == pageInfo || CollectionUtils.isEmpty(pageInfo.getList())) {
 				return new PageInfo<Map<String, Object>>();
 			}
 			

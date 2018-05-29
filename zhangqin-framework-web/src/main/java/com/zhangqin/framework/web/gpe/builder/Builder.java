@@ -10,6 +10,11 @@ import com.zhangqin.framework.web.gpe.bean.GpeBean;
  */
 public interface Builder {
 	/**
+	 * 使用GpeHeader注解解析覆盖GpeBean
+	 */
+	void coverByHeaderAnnotation();
+	
+	/**
 	 * 根据原始字段初始化GpeBean
 	 */
 	void initByOriginalFields();
@@ -23,11 +28,6 @@ public interface Builder {
 	 * 使用字段配置覆盖GpeBean
 	 */
 	void coverByFieldProperty();
-
-	/**
-	 * 使用GpeHeader注解解析覆盖GpeBean
-	 */
-	void coverByHeaderAnnotation();
 
 	/**
 	 * 根据GpeHeader注解解析覆盖GpeBean
