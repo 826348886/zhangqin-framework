@@ -30,10 +30,11 @@ public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum<?, ?>> imple
 			throws IOException, JsonProcessingException {
 		ObjectCodec codec = parse.getCodec();
 		JsonNode tree = codec.readTree(parse);
-		JsonNode valueNode = tree.get("value");
-
+		if(tree.has("value")) {
+			tree = tree.get("value");
+		}
 		Class<BaseEnum<?, ?>> clazz = (Class<BaseEnum<?, ?>>)getJavaClass();
-		return EnumUtils.getEnumObj(clazz, valueNode);
+		return EnumUtils.getEnumObj(clazz, tree.textValue());
 	}
 
 	@Override

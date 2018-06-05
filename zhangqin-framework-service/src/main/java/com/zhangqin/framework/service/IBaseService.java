@@ -8,7 +8,14 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.zhangqin.framework.common.exception.BizException;
 
+/**
+ * 
+ * @author zhangqin
+ *
+ * @param <T>
+ */
 public interface IBaseService<T> {
 	/**
 	 * 
@@ -18,7 +25,7 @@ public interface IBaseService<T> {
 	 * @author zhangqin
 	 * @date 2018年1月17日
 	 */
-	int add(T entity) throws Exception;
+	int add(T entity) throws BizException;
 
 	/**
 	 * 
@@ -28,7 +35,7 @@ public interface IBaseService<T> {
 	 * @author zhangqin
 	 * @date 2018年1月17日
 	 */
-	int add(List<T> list) throws Exception;
+	int add(List<T> list) throws BizException;
 
 	/**
 	 * 
@@ -38,7 +45,7 @@ public interface IBaseService<T> {
 	 * @author zhangqin
 	 * @date 2018年1月17日
 	 */
-	int updateById(T entity);
+	int updateById(T entity) throws BizException;
 
 	/**
 	 * 
@@ -48,7 +55,7 @@ public interface IBaseService<T> {
 	 * @author zhangqin
 	 * @date 2018年1月17日
 	 */
-	int deleteById(Serializable id);
+	int deleteById(Serializable id) throws BizException;
 
 	/**
 	 * 
