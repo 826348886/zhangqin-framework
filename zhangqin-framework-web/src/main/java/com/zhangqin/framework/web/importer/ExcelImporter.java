@@ -1,42 +1,45 @@
 package com.zhangqin.framework.web.importer;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.util.Lists;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zhangqin.framework.web.common.utils.ExcelUtils;
 
-public class ExcelImporter<T extends ExcelImporterError> {
+public class ExcelImporter<T> {
 	
-	@SuppressWarnings("unchecked")
-	public ExcelImporter() {
-		javaClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-		return;
-	}
 	
 	/**
 	 * 校验成功的数据
 	 */
-	private List<T> successDatas;
+	private List<T> successDatas = Lists.newArrayList();
 	
 	/**
 	 * 校验失败的数据
 	 */
 	private List<T> errorDatas;
 	
-	/**
-	 * 实体类的Class
-	 */
-	@SuppressWarnings("unused")
-	private Class<T> javaClass;
+	private AbstractImportValidator<T> validator;
 	
-	public void importData(MultipartFile file) {
-		Field[] fields = this.javaClass.getDeclaredFields();
+	public ExcelImporter(MultipartFile file,AbstractImportValidator<T> validator) {
 		
-		List<Map<String, Object>> list = ExcelUtils.readExcel(file);
+	}
+	
+	
+	
+	public void importExcel(MultipartFile file,Class<T> javaClass) {
+		// 读取Excel
+		List<T> list = ExcelUtils.readExcel(file,javaClass);
+		for (T t : list) {
+			String result = validator.checkOneRecord(t);
+			if(StringUtils.isBlank(result)) {
+				errorDatas.add(t);
+			}else {
+				successDatas.add(t);
+			}
+		}
 	}
 	
 	public List<T> getSuccessDatas() {

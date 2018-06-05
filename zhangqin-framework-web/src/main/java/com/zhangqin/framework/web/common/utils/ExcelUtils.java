@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,26 +44,7 @@ public class ExcelUtils {
 	 */
 	public static final String POINT = ".";
 
-	/**
-	 * 读取Excel
-	 * 
-	 * @param file
-	 * @param clazz
-	 * @return
-	 */
 	public static <T> List<T> readExcel(MultipartFile file, Class<T> clazz) {
-		List<Field> fieldList = Lists.newArrayList();
-		Field[] fields = clazz.getDeclaredFields();
-		for (Field field : fields) {
-			if (AnnotatedElementUtils.hasAnnotation(field, ExcelCell.class)) {
-				fieldList.add(field);
-			}
-		}
-
-		return null;
-	}
-
-	public static List<Map<String, Object>> readExcel(MultipartFile file) {
 		// 文件为空
 		if (null == file || file.isEmpty()) {
 			return null;
@@ -72,27 +54,27 @@ public class ExcelUtils {
 		String fileName = file.getOriginalFilename();
 		// 获取文件后缀
 		String suffix = getSuffix(fileName);
-
+		InputStream is = null;
 		try {
-			InputStream is = file.getInputStream();
+			is = file.getInputStream();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		//
 		if (OFFICE_EXCEL_2003_POSTFIX.equals(suffix)) { // xls(2003)格式
-
+			return readXls(is, clazz);
 		} else if (OFFICE_EXCEL_2010_POSTFIX.equals(suffix)) { // xlsx(2007)格式
-
+			return readXlsx(is,clazz);
 		}
 
 		return null;
 	}
 
-	private static List<Map<String, Object>> readXls(InputStream is) {
+	private static <T> List<T> readXls(InputStream is, Class<T> clazz) {
 		try {
 			HSSFWorkbook workbook = new HSSFWorkbook(is);
+			return readSheet(workbook, clazz);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,13 +82,19 @@ public class ExcelUtils {
 		return null;
 	}
 
-	private static void readXlsx() {
-
+	private static <T> List<T> readXlsx(InputStream is, Class<T> clazz) {
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(is);
+			return readSheet(workbook, clazz);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
-	private static List<Map<String, Object>> readSheet(Workbook workbook, String[] fields) {
-		// Exce读取数据
-		List<Map<String, Object>> dataList = Lists.newArrayList();
+	private static <T> List<T> readSheet(Workbook workbook, Class<T> clazz) {
+		List<T> list = Lists.newArrayList();
 
 		// 总sheet数
 		int sheetCount = workbook.getNumberOfSheets();
@@ -117,20 +105,25 @@ public class ExcelUtils {
 			if (sheet == null) {
 				continue;
 			}
-			readRow(sheet, fields, dataList);
+			List<T> sheetList = readRow(sheet, clazz);
+			list.addAll(sheetList);
 		}
-		return dataList;
+		return list;
 	}
 
-	private static <T> void readRow(Sheet sheet, String[] fields, List<T> dataList) {
+	private static <T> List<T> readRow(Sheet sheet, Class<T> clazz) {
+		List<T> list = Lists.newArrayList();
 		int lastRowNum = sheet.getLastRowNum();
 		for (int rowNum = 0; rowNum <= lastRowNum; rowNum++) {
 			Row row = sheet.getRow(rowNum);
 			if (row == null) {
 				continue;
 			}
-			//readCell(row, fields, dataList);
+			T t = readCell(row, clazz);
+			list.add(t);
 		}
+
+		return list;
 	}
 
 	private static <T> T readCell(Row row, Class<T> clazz) {
@@ -141,6 +134,7 @@ public class ExcelUtils {
 		Field[] fields = clazz.getDeclaredFields();
 		for (Field field : fields) {
 			if (AnnotatedElementUtils.hasAnnotation(field, ExcelCell.class)) {
+				field.setAccessible(true);
 				fieldList.add(field);
 				// 获取注解
 				ExcelCell annotation = field.getAnnotation(ExcelCell.class);
@@ -165,7 +159,7 @@ public class ExcelUtils {
 
 		return obj;
 	}
-	
+
 	private static Object readValue(Cell cell) {
 		Object value = null;
 		switch (cell.getCellType()) {
@@ -182,31 +176,6 @@ public class ExcelUtils {
 			break;
 		}
 		return value;
-	}
-
-	private static void readCell(Row row, String[] fields, List<Map<String, Object>> dataList) {
-		Map<String, Object> rowMap = Maps.newHashMap();
-		for (int cellNum = 0; cellNum < fields.length; cellNum++) {
-			Object obj = null;
-			Cell cell = row.getCell(cellNum);
-			switch (cell.getCellType()) {
-			case Cell.CELL_TYPE_BOOLEAN:
-				obj = cell.getBooleanCellValue();
-				break;
-			case Cell.CELL_TYPE_NUMERIC:
-				// 科学计数法格式化
-				obj = getScienceNum(cell);
-				break;
-			case Cell.CELL_TYPE_FORMULA:
-				// 如果是Date类型则，转化为Data格式
-				obj = getDateValue(cell);
-				break;
-			default:
-				obj = cell.getStringCellValue();
-				break;
-			}
-			rowMap.put(fields[cellNum], obj);
-		}
 	}
 
 	/**
