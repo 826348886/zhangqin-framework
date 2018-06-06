@@ -39,4 +39,6 @@ public interface GpeRealm {
 	 * @return
 	 */
 	Set<String> getForbidFields(String userId);
+	
+	String getStringFromRedis(String key);
 }

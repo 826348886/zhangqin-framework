@@ -9,11 +9,11 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
 
 /**
- * 处理链配置
+ * 注册方法链
  * @author zhangqin
  *
  */
-public class MethodHandlerChainConfig {
+public class GpeMethodHandlerChainConfig {
 	public static List<AbstractGpeMethodHandler<?>> buildHandlerChain(GpeRequestMapping annotation, RequestMappingInfo mapping,Method method) {
 
 		List<AbstractGpeMethodHandler<?>> chainList = Arrays.asList(new AbstractGpeMethodHandler[] {

@@ -34,7 +34,8 @@ public class BaseEnumDeserializer extends JsonDeserializer<BaseEnum<?, ?>> imple
 			tree = tree.get("value");
 		}
 		Class<BaseEnum<?, ?>> clazz = (Class<BaseEnum<?, ?>>)getJavaClass();
-		return EnumUtils.getEnumObj(clazz, tree.textValue());
+		
+		return EnumUtils.getEnumObj(clazz, tree.asText());
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.zhangqin.framework.web.gpe.config;
+package com.zhangqin.framework.web.core;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -13,9 +13,18 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
 import com.zhangqin.framework.web.gpe.handler.AbstractGpeMethodHandler;
-import com.zhangqin.framework.web.gpe.handler.MethodHandlerChainConfig;
+import com.zhangqin.framework.web.gpe.handler.GpeMethodHandlerChainConfig;
+import com.zhangqin.framework.web.importer.annotation.ExcelImport;
+import com.zhangqin.framework.web.importer.handler.AbstractImportMethodHandler;
+import com.zhangqin.framework.web.importer.handler.ExcelImportMethodHandlerChainConfig;
 
-public class GpeRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
+/**
+ * RequestMappingHandlerMapping 扩展
+ * 
+ * @author kun
+ *
+ */
+public class RequestMappingHandlerMappingPlus extends RequestMappingHandlerMapping {
 
 	/*
 	 * 
@@ -52,6 +61,8 @@ public class GpeRequestMappingHandlerMapping extends RequestMappingHandlerMappin
 			registerHandlerMethod(handler, invocableMethod, mapping);
 			// 注册GPE方法
 			registerGpeHandlerMethods(invocableMethod, mapping);
+			// 注册Excel导入方法
+			registerExcelImportHandlerMethods(invocableMethod, mapping);
 		}
 		// super.detectHandlerMethods(handler);
 	}
@@ -63,18 +74,41 @@ public class GpeRequestMappingHandlerMapping extends RequestMappingHandlerMappin
 	 * @param mapping
 	 */
 	protected void registerGpeHandlerMethods(Method method, RequestMappingInfo mapping) {
-		// 是否标记有GpeMethod注解
+		// 是否标记有GpeRequestMapping注解
 		if (mapping == null || !AnnotatedElementUtils.hasAnnotation(method, GpeRequestMapping.class)) {
 			return;
 		}
-		
+
 		// 获取GpeRequestMapping注解
 		GpeRequestMapping annotation = method.getAnnotation(GpeRequestMapping.class);
-		
-		List<AbstractGpeMethodHandler<?>> handlerList = MethodHandlerChainConfig.buildHandlerChain(annotation, mapping, method);
-		handlerList.forEach(action->{
+
+		List<AbstractGpeMethodHandler<?>> handlerList = GpeMethodHandlerChainConfig.buildHandlerChain(annotation,
+				mapping, method);
+		handlerList.forEach(action -> {
 			registerHandlerMethod(action, action.getMethod(), action.getMapping());
 		});
 	}
-	
+
+	/**
+	 * 注册Excel导出方法
+	 * 
+	 * @param method
+	 * @param mapping
+	 */
+	protected void registerExcelImportHandlerMethods(Method method, RequestMappingInfo mapping) {
+		// 是否标记有ExcelImport注解
+		if (mapping == null || !AnnotatedElementUtils.hasAnnotation(method, ExcelImport.class)) {
+			return;
+		}
+
+		// 获取GpeRequestMapping注解
+		ExcelImport annotation = method.getAnnotation(ExcelImport.class);
+		
+		List<AbstractImportMethodHandler<?>> handlerList = ExcelImportMethodHandlerChainConfig
+				.buildHandlerChain(annotation, mapping, method);
+		handlerList.forEach(action -> {
+			registerHandlerMethod(action, action.getMethod(), action.getMapping());
+		});
+	}
+
 }

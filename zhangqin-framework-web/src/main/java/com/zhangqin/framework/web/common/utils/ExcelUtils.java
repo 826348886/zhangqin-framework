@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.zhangqin.framework.gpe.annotation.ExcelCell;
+import com.zhangqin.framework.web.importer.annotation.ExcelCell;
 
 /**
  * Excel工具类

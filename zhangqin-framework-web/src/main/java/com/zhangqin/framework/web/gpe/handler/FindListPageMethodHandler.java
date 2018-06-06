@@ -26,6 +26,7 @@ import com.google.common.collect.Maps;
 import com.zhangqin.framework.common.enums.BaseEnum;
 import com.zhangqin.framework.common.utils.BeanMapper;
 import com.zhangqin.framework.web.common.utils.SpringContextUtils;
+import com.zhangqin.framework.web.core.RequestMappingHandlerAdapterPlus;
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
 import com.zhangqin.framework.web.gpe.bean.GpeBean;
 import com.zhangqin.framework.web.gpe.bean.GpeFieldBean;
@@ -60,7 +61,7 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 		Object obj = SpringContextUtils.getBean(targetClass);
 
 		ServletInvocableHandlerMethod handler = new ServletInvocableHandlerMethod(obj, getProxyMethod());
-		GpeRequestMappingHandlerAdapter adapter = SpringContextUtils.getBean(GpeRequestMappingHandlerAdapter.class);
+		RequestMappingHandlerAdapterPlus adapter = SpringContextUtils.getBean(RequestMappingHandlerAdapterPlus.class);
 		try {
 			PageInfo<?> pageInfo = (PageInfo<?>) adapter.invokeForRequest(request, response, handler);
 			if (null == pageInfo || CollectionUtils.isEmpty(pageInfo.getList())) {

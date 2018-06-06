@@ -1,4 +1,4 @@
-package com.zhangqin.framework.web.gpe.handler;
+package com.zhangqin.framework.web.importer.handler;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
 import com.zhangqin.framework.web.core.MethodHandler;
-import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
+import com.zhangqin.framework.web.importer.annotation.ExcelImport;
 
 /**
- * GpeMethodHandler抽象类
- * 
- * @author zhangqin
+ * ImportMethodHandler抽象类
+ * @author kun
  *
+ * @param <T>
  */
-public abstract class AbstractGpeMethodHandler<T> implements MethodHandler<T> {
+public abstract class AbstractImportMethodHandler<T> implements MethodHandler<T> {
 	/**
 	 * registerHandlerMethod方法中的method参数
 	 * 
@@ -42,7 +42,7 @@ public abstract class AbstractGpeMethodHandler<T> implements MethodHandler<T> {
 	 * 
 	 * @see com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping
 	 */
-	private GpeRequestMapping annotation;
+	private ExcelImport annotation;
 	
 	/**
 	 * 构造函数
@@ -52,7 +52,7 @@ public abstract class AbstractGpeMethodHandler<T> implements MethodHandler<T> {
 	 * @param proxyMethod
 	 * @param paths
 	 */
-	public AbstractGpeMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, Method proxyMethod,
+	public AbstractImportMethodHandler(ExcelImport annotation, RequestMappingInfo mapping, Method proxyMethod,
 			String... paths) {
 		this(annotation, mapping, paths);
 		this.proxyMethod = proxyMethod;
@@ -65,7 +65,7 @@ public abstract class AbstractGpeMethodHandler<T> implements MethodHandler<T> {
 	 * @param mapping
 	 * @param paths
 	 */
-	public AbstractGpeMethodHandler(GpeRequestMapping annotation, RequestMappingInfo mapping, String... paths) {
+	public AbstractImportMethodHandler(ExcelImport annotation, RequestMappingInfo mapping, String... paths) {
 		// method
 		this.method = Arrays.asList(this.getClass().getMethods()).parallelStream().filter(m -> {
 			return m.getName().equals("handler");
@@ -92,16 +92,16 @@ public abstract class AbstractGpeMethodHandler<T> implements MethodHandler<T> {
 		this.mapping = mapping;
 	}
 
-	public GpeRequestMapping getAnnotation() {
+	public ExcelImport getAnnotation() {
 		return annotation;
 	}
 
-	public void setAnnotation(GpeRequestMapping annotation) {
+	public void setAnnotation(ExcelImport annotation) {
 		this.annotation = annotation;
 	}
 	
-	public Class<?> getViewObject(){
-		return annotation.viewObject();
+	public Class<?> getJavaClass(){
+		return annotation.javaClass();
 	}
 
 	public Method getProxyMethod() {
