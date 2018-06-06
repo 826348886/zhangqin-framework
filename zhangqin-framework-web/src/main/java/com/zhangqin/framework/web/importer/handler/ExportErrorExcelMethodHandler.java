@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,13 +56,12 @@ public class ExportErrorExcelMethodHandler  extends AbstractImportMethodHandler<
 		GpeRealm realm = SpringContextUtils.getBean(GpeRealm.class);
 		String json = realm.getStringFromRedis("IMPORT:" + ticket);
 
+		@SuppressWarnings("unchecked")
 		List<Object> list = JsonMapper.fromJson(json, List.class);
 
 		exportErrorExcel(getJavaClass(), list, response);
 		return null;
 	}
-	
-
 	
 
 	/**
@@ -103,8 +103,13 @@ public class ExportErrorExcelMethodHandler  extends AbstractImportMethodHandler<
 				XSSFRow row = sheet.createRow(rowNo++);
 				for (int j = 0; j < fieldList.size(); j++) {
 					Field field = fieldList.get(j);
-					Object obj = list.get(i);
-					Object value = field.get(obj);
+					 
+					LinkedHashMap<String, Object> obj = (LinkedHashMap<String, Object>)list.get(i);
+					
+					Object value = obj.get(field.getName());
+					if (null == value) {
+						value = "";
+					}
 					
 					// 创建单元格
 					XSSFCell cell = row.createCell(j);

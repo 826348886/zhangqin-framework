@@ -1,5 +1,7 @@
 package com.zhangqin.framework.web.importer;
 
+import com.zhangqin.framework.web.importer.annotation.ExcelCell;
+
 /**
  * Excel导入模版
  * 
@@ -10,6 +12,7 @@ public class ExcelImportTemplate {
 	/**
 	 * 错误信息
 	 */
+	@ExcelCell(title = "错误信息")
 	private String errorMsg;
 
 	/**

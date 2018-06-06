@@ -25,8 +25,10 @@ public class ExcelImportMethodHandlerChainConfig {
 	public static List<AbstractImportMethodHandler<?>> buildHandlerChain(ExcelImport annotation,
 			RequestMappingInfo mapping, Method method) {
 		List<AbstractImportMethodHandler<?>> chainList = Arrays.asList(new AbstractImportMethodHandler[] {
-			// 注册findGridResult方法
-			new ExportExcelTemplateMethodHandler(annotation, mapping, "excel/template")
+			// 注册template方法
+			new ExportExcelTemplateMethodHandler(annotation, mapping, "template"),
+			// 注册error方法
+			new ExportErrorExcelMethodHandler(annotation, mapping, "error")
 		});
 		return chainList;
 	}
