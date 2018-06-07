@@ -12,7 +12,7 @@ import com.zhangqin.framework.common.entity.ResponseData;
 import com.zhangqin.framework.common.enums.ResponseCodeEnum;
 import com.zhangqin.framework.common.utils.JsonMapper;
 import com.zhangqin.framework.web.common.utils.SpringContextUtils;
-import com.zhangqin.framework.web.gpe.GpeRealm;
+import com.zhangqin.framework.web.core.GpeRealm;
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
 import com.zhangqin.framework.web.gpe.bean.result.UserColumnSetting;
 

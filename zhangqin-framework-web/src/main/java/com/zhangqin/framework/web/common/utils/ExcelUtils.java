@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.zhangqin.framework.common.utils.ReflectUtils;
 import com.zhangqin.framework.web.importer.annotation.ExcelCell;
 
 /**
@@ -114,7 +115,7 @@ public class ExcelUtils {
 	private static <T> List<T> readRow(Sheet sheet, Class<T> clazz) {
 		List<T> list = Lists.newArrayList();
 		int lastRowNum = sheet.getLastRowNum();
-		for (int rowNum = 0; rowNum <= lastRowNum; rowNum++) {
+		for (int rowNum = 1; rowNum <= lastRowNum; rowNum++) {
 			Row row = sheet.getRow(rowNum);
 			if (row == null) {
 				continue;
@@ -128,29 +129,20 @@ public class ExcelUtils {
 
 	private static <T> T readCell(Row row, Class<T> clazz) {
 		T obj = null;
-		List<Field> fieldList = Lists.newArrayList();
-
-		List<ExcelCell> annotationList = Lists.newArrayList();
-		Field[] fields = clazz.getDeclaredFields();
-		for (Field field : fields) {
-			if (AnnotatedElementUtils.hasAnnotation(field, ExcelCell.class)) {
-				field.setAccessible(true);
-				fieldList.add(field);
-				// 获取注解
-				ExcelCell annotation = field.getAnnotation(ExcelCell.class);
-				annotationList.add(annotation);
-			}
-		}
+		
+		List<Field> fieldList = ReflectUtils.getFieldList(clazz,ExcelCell.class);
 
 		try {
 			obj = clazz.newInstance();
 
-			for (int index = 0; index < fieldList.size(); index++) {
+			for (int index = 1; index < fieldList.size(); index++) {
 				// 获取单元格
-				Cell cell = row.getCell(index);
-				Object value = readValue(cell);
+				Cell cell = row.getCell(index-1);
+				if (null != cell) {
+					Object value = readValue(cell);
 
-				fieldList.get(index).set(obj, value);
+					fieldList.get(index).set(obj, value);
+				}
 			}
 
 		} catch (InstantiationException | IllegalAccessException e) {

@@ -20,7 +20,7 @@ public @interface ExcelImport {
 	 * 
 	 * @return
 	 */
-	Class<? extends ExcelImportTemplate> javaClass();
+	Class<? extends ExcelImportTemplate> [] javaClass();
 	
 	/**
 	 * 标题

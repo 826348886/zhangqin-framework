@@ -100,7 +100,7 @@ public abstract class AbstractImportMethodHandler<T> implements MethodHandler<T>
 		this.annotation = annotation;
 	}
 	
-	public Class<?> getJavaClass(){
+	public Class<?>[] getJavaClass(){
 		return annotation.javaClass();
 	}
 

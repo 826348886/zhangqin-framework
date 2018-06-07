@@ -5,12 +5,12 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -20,11 +20,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
-import com.google.common.collect.Lists;
 import com.zhangqin.framework.common.entity.ResponseData;
+import com.zhangqin.framework.common.utils.ReflectUtils;
 import com.zhangqin.framework.web.importer.annotation.ExcelCell;
 import com.zhangqin.framework.web.importer.annotation.ExcelImport;
 
@@ -47,62 +46,30 @@ public class ExportExcelTemplateMethodHandler extends AbstractImportMethodHandle
 
 	@Override
 	public ResponseData<Boolean> handler(HttpServletRequest request, HttpServletResponse response) {
+		// 模版类型
+		int type = 0;
+		String typeString = request.getParameter("type");
+		if(StringUtils.isNotBlank(typeString)) {
+			type = Integer.parseInt(typeString);
+		}
+		
 		// 获取Class
-		Class<?> javaClass = getJavaClass();
+		Class<?> javaClass = getJavaClass()[type];
 
 		// 获得所有标记ExcelCell注解的字段
-		List<Field> list = getFieldList(javaClass);
+		List<Field> list = ReflectUtils.getFieldList(javaClass, ExcelCell.class);
+
+		// 导出模版中去除errorMsg
+		Iterator<Field> iterator = list.iterator();
+		while (iterator.hasNext()) {
+			if (iterator.next().getName().equals("errorMsg")) {
+				iterator.remove();
+			}
+		}
 
 		// 导出模版
 		exportTemplate(list, response);
 		return null;
-	}
-
-	/**
-	 * 获得所有标记ExcelCell注解的字段
-	 * 
-	 * @param javaClass
-	 * @return
-	 */
-	private List<Field> getFieldList(Class<?> javaClass) {
-		// 用于存储所有标记ExcelCell注解的字段
-		List<Field> fieldList = Lists.newArrayList();
-
-		// 获取所有标记ExcelCell注解的字段
-		Class<?> tempClass = javaClass;
-		while (null != tempClass) {
-			List<Field> tempList = Lists.newArrayList();
-			
-			// 获取tempClass的所有Field
-			for (Field field : tempClass.getDeclaredFields()) {
-				
-				// 是否存在ExcelImport注解
-				if (!AnnotatedElementUtils.hasAnnotation(field, ExcelCell.class)) {
-					continue;
-				}
-
-				// 是否已经存在
-				boolean exists = fieldList.parallelStream().filter(f -> {
-					return f.getName().equals(field.getName());
-				}).count() > 0;
-
-				// 不存在且字段名不是serialVersionUID，则添加到list
-				if (!exists && !field.getName().equals("serialVersionUID")) {
-					field.setAccessible(true);
-					tempList.add(field);
-				}
-			}
-			
-			// 每次插到最前面
-			if(CollectionUtils.isNotEmpty(tempList)) {
-				fieldList.addAll(0, tempList);
-			}
-			
-			// 得到父类,然后赋给自己
-			tempClass = tempClass.getSuperclass();
-		}
-
-		return fieldList;
 	}
 
 	/**

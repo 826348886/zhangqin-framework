@@ -28,7 +28,7 @@ import com.google.common.collect.Lists;
 import com.zhangqin.framework.common.entity.ResponseData;
 import com.zhangqin.framework.common.utils.JsonMapper;
 import com.zhangqin.framework.web.common.utils.SpringContextUtils;
-import com.zhangqin.framework.web.gpe.GpeRealm;
+import com.zhangqin.framework.web.core.GpeRealm;
 import com.zhangqin.framework.web.importer.annotation.ExcelCell;
 import com.zhangqin.framework.web.importer.annotation.ExcelImport;
 
@@ -51,6 +51,13 @@ public class ExportErrorExcelMethodHandler  extends AbstractImportMethodHandler<
 	public ResponseData<Boolean> handler(HttpServletRequest request, HttpServletResponse response) {
 		// 分页参数
 		String ticket = request.getParameter("ticket");
+		
+		// 模版类型
+		int type = 0;
+		String typeString = request.getParameter("type");
+		if(StringUtils.isNotBlank(typeString)) {
+			type = Integer.parseInt(typeString);
+		}
 
 		// GPE数据获取及持久化接口
 		GpeRealm realm = SpringContextUtils.getBean(GpeRealm.class);
@@ -59,7 +66,7 @@ public class ExportErrorExcelMethodHandler  extends AbstractImportMethodHandler<
 		@SuppressWarnings("unchecked")
 		List<Object> list = JsonMapper.fromJson(json, List.class);
 
-		exportErrorExcel(getJavaClass(), list, response);
+		exportErrorExcel(getJavaClass()[type], list, response);
 		return null;
 	}
 	
@@ -70,6 +77,7 @@ public class ExportErrorExcelMethodHandler  extends AbstractImportMethodHandler<
 	 * @param list
 	 * @param response
 	 */
+	@SuppressWarnings("unchecked")
 	private void exportErrorExcel(Class<?> javaClass,List<Object> list, HttpServletResponse response) {
 		// 获得所有标记ExcelCell注解的字段
 		List<Field> fieldList = getFieldList(javaClass);
