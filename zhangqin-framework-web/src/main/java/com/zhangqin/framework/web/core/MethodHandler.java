@@ -1,4 +1,4 @@
-package com.zhangqin.framework.web.gpe.handler;
+package com.zhangqin.framework.web.core;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author zhangqin
  *
  */
-public interface GpeMethodHandler<T> {
+public interface MethodHandler<T> {
 	/**
 	 * 方法handler
 	 * 

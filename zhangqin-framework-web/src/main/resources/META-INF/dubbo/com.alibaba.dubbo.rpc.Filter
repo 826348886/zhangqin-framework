@@ -1,0 +1,2 @@
+tenantConsumerFilter=com.zhangqin.framework.dubbo.TenantConsumerFilter
+userConsumerFilter=com.zhangqin.framework.dubbo.UserConsumerFilter

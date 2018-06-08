@@ -1,4 +1,4 @@
-package com.zhangqin.framework.web.gpe.handler;
+package com.zhangqin.framework.web.core;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -25,7 +25,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * @author zhangqin
  *
  */
-public class GpeRequestMappingHandlerAdapter extends RequestMappingHandlerAdapter {
+public class RequestMappingHandlerAdapterPlus extends RequestMappingHandlerAdapter {
 
 	private HandlerMethodArgumentResolverComposite argumentResolvers;
 	private HandlerMethodReturnValueHandlerComposite returnValueHandlers;
@@ -40,7 +40,7 @@ public class GpeRequestMappingHandlerAdapter extends RequestMappingHandlerAdapte
 	 * @return
 	 * @throws Exception
 	 */
-	protected Object invokeForRequest(HttpServletRequest request, HttpServletResponse response,
+	public Object invokeForRequest(HttpServletRequest request, HttpServletResponse response,
 			HandlerMethod handlerMethod) throws Exception {
 
 		// 初始适配器参数

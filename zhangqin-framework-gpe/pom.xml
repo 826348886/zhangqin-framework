@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.zhangqin.framework</groupId>
 		<artifactId>zhangqin-framework</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>zhangqin-framework-gpe</artifactId>
 	<packaging>pom</packaging>
@@ -14,7 +14,7 @@
 		<dependency>
 			<groupId>com.zhangqin.framework</groupId>
 			<artifactId>zhangqin-framework-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 

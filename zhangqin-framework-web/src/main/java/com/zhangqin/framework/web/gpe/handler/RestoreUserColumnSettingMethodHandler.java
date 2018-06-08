@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import com.zhangqin.framework.common.entity.ResponseData;
 import com.zhangqin.framework.common.enums.ResponseCodeEnum;
 import com.zhangqin.framework.web.common.utils.SpringContextUtils;
-import com.zhangqin.framework.web.gpe.GpeRealm;
+import com.zhangqin.framework.web.core.GpeRealm;
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
 
 /**

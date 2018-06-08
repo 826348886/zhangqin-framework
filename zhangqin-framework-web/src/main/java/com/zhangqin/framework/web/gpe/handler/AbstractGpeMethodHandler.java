@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
+import com.zhangqin.framework.web.core.MethodHandler;
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
 
 /**
@@ -14,7 +15,7 @@ import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
  * @author zhangqin
  *
  */
-public abstract class AbstractGpeMethodHandler<T> implements GpeMethodHandler<T> {
+public abstract class AbstractGpeMethodHandler<T> implements MethodHandler<T> {
 	/**
 	 * registerHandlerMethod方法中的method参数
 	 * 

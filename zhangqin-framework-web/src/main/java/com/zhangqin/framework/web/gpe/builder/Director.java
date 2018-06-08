@@ -26,7 +26,9 @@ public class Director {
 	 * 产品构造方法，在该方法内，调用建造方法。
 	 */
 	public void construct() {
+		// 使用GpeHeader注解解析覆盖GpeBean
 		builder.coverByHeaderAnnotation();
+		
 		// 根据原始字段初始化GpeBean
 		builder.initByOriginalFields();
 

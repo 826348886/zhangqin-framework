@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
+import com.google.common.collect.Lists;
 import com.zhangqin.framework.gpe.GpeDefaultPropertyStrategy;
 import com.zhangqin.framework.gpe.GpeGlobalPropertyBean;
 import com.zhangqin.framework.gpe.GpePropertyStrategy;
@@ -48,6 +50,8 @@ public class AnalysisUtils {
 		List<Field> fieldList = new ArrayList<Field>();
 		Class<?> tempClass = clazz;
 		while (null != tempClass) {
+			List<Field> tempList = Lists.newArrayList();
+			
 			// 获取tempClass的所有Field
 			for (Field field : tempClass.getDeclaredFields()) {
 				boolean exists = fieldList.parallelStream().filter(f -> {
@@ -60,9 +64,15 @@ public class AnalysisUtils {
 				
 				if (!exists && !field.getName().equals("serialVersionUID")) {
 					field.setAccessible(true);
-					fieldList.add(field);
+					tempList.add(field);
 				}
 			}
+			
+			// 每次插到最前面
+			if(CollectionUtils.isNotEmpty(tempList)) {
+				fieldList.addAll(0, tempList);
+			}
+			
 			// 得到父类,然后赋给自己
 			tempClass = tempClass.getSuperclass();
 		}

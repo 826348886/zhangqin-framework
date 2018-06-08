@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHan
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.zhangqin.framework.web.common.utils.SpringContextUtils;
+import com.zhangqin.framework.web.core.RequestMappingHandlerAdapterPlus;
 import com.zhangqin.framework.web.gpe.ParameterRequestWrapper;
 import com.zhangqin.framework.web.gpe.annotation.GpeRequestMapping;
 import com.zhangqin.framework.web.gpe.enums.UseFor;
@@ -65,7 +66,7 @@ public class FindPrintListMethodHandler extends AbstractGpeMethodHandler<List<Ma
 		Class<?> targetClass = getProxyMethod().getDeclaringClass();
 		Object controller = SpringContextUtils.getBean(targetClass);
 		ServletInvocableHandlerMethod handler = new ServletInvocableHandlerMethod(controller, getProxyMethod());
-		GpeRequestMappingHandlerAdapter adapter = SpringContextUtils.getBean(GpeRequestMappingHandlerAdapter.class);
+		RequestMappingHandlerAdapterPlus adapter = SpringContextUtils.getBean(RequestMappingHandlerAdapterPlus.class);
 
 		List<Object> list;
 		if (StringUtils.isNotBlank(page) && StringUtils.isNotBlank(rows)) {
@@ -93,7 +94,7 @@ public class FindPrintListMethodHandler extends AbstractGpeMethodHandler<List<Ma
 	 * @param adapter
 	 */
 	private List<Object> printAllPage(HttpServletRequest request, HttpServletResponse response,
-			ServletInvocableHandlerMethod handler, GpeRequestMappingHandlerAdapter adapter) {
+			ServletInvocableHandlerMethod handler, RequestMappingHandlerAdapterPlus adapter) {
 		try {
 			List<Object> list = Lists.newArrayList();
 			// 当前页，从第一页开始
@@ -133,7 +134,7 @@ public class FindPrintListMethodHandler extends AbstractGpeMethodHandler<List<Ma
 	 */
 	@SuppressWarnings("unchecked")
 	private List<Object> printCurrentPage(HttpServletRequest request, HttpServletResponse response,
-			ServletInvocableHandlerMethod handler, GpeRequestMappingHandlerAdapter adapter) {
+			ServletInvocableHandlerMethod handler, RequestMappingHandlerAdapterPlus adapter) {
 		try {
 			PageInfo<?> page = invoke(request, response, handler, adapter);
 			return (List<Object>) page.getList();
@@ -154,7 +155,7 @@ public class FindPrintListMethodHandler extends AbstractGpeMethodHandler<List<Ma
 	 * @throws Exception
 	 */
 	private PageInfo<?> invoke(HttpServletRequest request, HttpServletResponse response,
-			ServletInvocableHandlerMethod handler, GpeRequestMappingHandlerAdapter adapter) throws Exception {
+			ServletInvocableHandlerMethod handler, RequestMappingHandlerAdapterPlus adapter) throws Exception {
 		PageInfo<?> pageInfo = (PageInfo<?>) adapter.invokeForRequest(request, response, handler);
 		return pageInfo;
 	}

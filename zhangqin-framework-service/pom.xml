@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.zhangqin.framework</groupId>
 		<artifactId>zhangqin-framework</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>zhangqin-framework-service</artifactId>
 
@@ -30,12 +30,17 @@
 		<dependency>
 			<groupId>com.zhangqin.framework</groupId>
 			<artifactId>zhangqin-framework-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.zhangqin.framework</groupId>
+			<artifactId>zhangqin-framework-dubbo</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.zhangqin.framework</groupId>
 			<artifactId>zhangqin-framework-dal</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		
 		<dependency>

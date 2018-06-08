@@ -21,8 +21,8 @@ import com.zhangqin.framework.common.utils.BeanMapper;
 import com.zhangqin.framework.gpe.GpeGlobalPropertyBean;
 import com.zhangqin.framework.gpe.enums.TextAlign;
 import com.zhangqin.framework.web.common.utils.SpringContextUtils;
+import com.zhangqin.framework.web.core.GpeRealm;
 import com.zhangqin.framework.web.gpe.GpeCacheManager;
-import com.zhangqin.framework.web.gpe.GpeRealm;
 import com.zhangqin.framework.web.gpe.bean.GpeBean;
 import com.zhangqin.framework.web.gpe.bean.GpeFieldBean;
 import com.zhangqin.framework.web.gpe.bean.GpeFieldPropertyBean;
@@ -81,11 +81,33 @@ public class ConcreteBuilder implements Builder {
 		this.clazz = clazz;
 		this.useFor = useFor;
 	}
+	
+	@Override
+	public void coverByHeaderAnnotation() {
+		// 从缓存中取GpeBean对象
+		GpeBean bean = GpeCacheManager.getCopyBean(clazz);
+		if (null != bean) {
+			gpe = bean;
+			skip = true;
+			return;
+		} else {
+			gpe = new GpeBean();
+		}
+		// 无需覆盖
+		if (skip) {
+			return;
+		}
+
+		GpeHeaderAnalysis header = AnalysisUtils.analysisHeader(clazz);
+		analysisAll = header.isAll();
+		GpeHeaderBean headerBean = BeanMapper.map(header, GpeHeaderBean.class);
+		gpe.setHeader(headerBean);
+	}
 
 	@Override
 	public void initByOriginalFields() {
 		// 解析原始字段
-		List<Field> originalFields = AnalysisUtils.analysisOriginalFields(clazz,analysisAll);
+		List<Field> originalFields = AnalysisUtils.analysisOriginalFields(clazz, analysisAll);
 
 		// 原始字段转为GpeFieldBean对象
 		int sort = 0;
@@ -189,28 +211,6 @@ public class ConcreteBuilder implements Builder {
 	}
 
 	@Override
-	public void coverByHeaderAnnotation() {
-		// 从缓存中取GpeBean对象
-		GpeBean bean = GpeCacheManager.getCopyBean(clazz);
-		if (null != bean) {
-			gpe = bean;
-			skip = true;
-			return;
-		}else {
-			gpe = new GpeBean();
-		}
-		// 无需覆盖
-		if (skip) {
-			return;
-		}
-
-		GpeHeaderAnalysis header = AnalysisUtils.analysisHeader(clazz);
-		analysisAll = header.isAll();
-		GpeHeaderBean headerBean = BeanMapper.map(header, GpeHeaderBean.class);
-		gpe.setHeader(headerBean);
-	}
-
-	@Override
 	public void coverByFieldAnnotation() {
 		// 无需覆盖
 		if (skip) {
@@ -261,7 +261,7 @@ public class ConcreteBuilder implements Builder {
 				// 新增一个字段用于枚举描述展现
 				GpeFieldBean newField = new GpeFieldBean();
 				BeanMapper.copySkipNullAndEmpty(field, newField);
-				;
+				
 				newField.setField(field.getField() + "Desc");
 				newField.setAlign(TextAlign.LEFT);
 				newField.setHidden(false);

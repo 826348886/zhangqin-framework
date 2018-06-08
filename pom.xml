@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zhangqin.framework</groupId>
 	<artifactId>zhangqin-framework</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>基础框架</name>
@@ -46,6 +46,7 @@
 		<module>zhangqin-framework-dal</module>
 		<module>zhangqin-framework-service</module>
 		<module>zhangqin-framework-gpe</module>
+		<module>zhangqin-framework-dubbo</module>
 	</modules>
 	
 	<!-- 构建 -->

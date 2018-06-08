@@ -1,6 +1,7 @@
-package com.zhangqin.framework.web.gpe;
+package com.zhangqin.framework.web.core;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import com.zhangqin.framework.web.gpe.bean.result.UserColumnSetting;
 
@@ -39,4 +40,8 @@ public interface GpeRealm {
 	 * @return
 	 */
 	Set<String> getForbidFields(String userId);
+	
+	String getStringFromRedis(String key);
+	
+	void setStringToRedis(String key, String Json, long timeout, TimeUnit unit);
 }
