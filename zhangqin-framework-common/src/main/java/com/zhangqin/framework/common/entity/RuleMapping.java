@@ -17,6 +17,23 @@ public class RuleMapping implements Serializable {
 	private static final long serialVersionUID = 6669114414301575532L;
 	
 	/**
+	 * 构造函数
+	 */
+	public RuleMapping() {
+		
+	}
+	
+	/**
+	 * 构造函数
+	 * @param field
+	 * @param rule
+	 */
+	public RuleMapping(String field, CompareOperator rule) {
+		this.field = field;
+		this.rule = rule;
+	}
+	
+	/**
 	 * 字段
 	 */
 	private String field;

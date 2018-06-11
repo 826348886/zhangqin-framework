@@ -1,11 +1,18 @@
 package com.zhangqin.framework.common.enums;
 
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * 比较运算符
  * 
  * @author kun
  *
  */
+@JsonDeserialize(using=JsonDeserializer.None.class)
+@JsonSerialize(using=JsonSerializer.None.class)
 public enum CompareOperator implements BaseEnum<CompareOperator, String> {
 	/**
 	 * 等于
@@ -35,6 +42,14 @@ public enum CompareOperator implements BaseEnum<CompareOperator, String> {
 	 * 包含
 	 */
 	LK("LK", "包含"),
+	/**
+	 * 左包含
+	 */
+	LK_L("LK_L", "左包含"),
+	/**
+	 * 右包含
+	 */
+	LK_R("LK_R", "右包含"),
 	/**
 	 * 不包含
 	 */

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.dozer.Mapping;
 
-import com.zhangqin.framework.common.entity.RuleMapping;
+import com.zhangqin.framework.common.entity.RuleMappingList;
 
 /**
  * 查询基类
@@ -33,7 +33,7 @@ public class BaseQo implements Serializable {
 	/**
 	 * 规则映射列表
 	 */
-	private RuleMapping[] rules;
+	private RuleMappingList rules = new RuleMappingList();
 
 	public int getPage() {
 		return page;
@@ -51,11 +51,11 @@ public class BaseQo implements Serializable {
 		this.rows = rows;
 	}
 
-	public RuleMapping[] getRules() {
+	public RuleMappingList getRules() {
 		return rules;
 	}
 
-	public void setRules(RuleMapping[] rules) {
+	public void setRules(RuleMappingList rules) {
 		this.rules = rules;
 	}
 
