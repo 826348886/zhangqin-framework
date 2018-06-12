@@ -1,10 +1,8 @@
-package com.zhangqin.framework.common.qo;
+package com.zhangqin.framework.gpe.entity;
 
 import java.io.Serializable;
 
 import org.dozer.Mapping;
-
-import com.zhangqin.framework.common.entity.RuleMappingList;
 
 /**
  * 查询基类
@@ -12,7 +10,7 @@ import com.zhangqin.framework.common.entity.RuleMappingList;
  * @author zhangqin
  *
  */
-public class BaseQo implements Serializable {
+public class BaseQO implements Serializable {
 	/**
 	 * serialVersionUID
 	 */
@@ -29,11 +27,11 @@ public class BaseQo implements Serializable {
 	 */
 	@Mapping("pageSize")
 	private int rows;
-
+	
 	/**
 	 * 规则映射列表
 	 */
-	private RuleMappingList rules = new RuleMappingList();
+	private SearchRuleMappingList rules = new SearchRuleMappingList();
 
 	public int getPage() {
 		return page;
@@ -51,11 +49,11 @@ public class BaseQo implements Serializable {
 		this.rows = rows;
 	}
 
-	public RuleMappingList getRules() {
+	public SearchRuleMappingList getRules() {
 		return rules;
 	}
 
-	public void setRules(RuleMappingList rules) {
+	public void setRules(SearchRuleMappingList rules) {
 		this.rules = rules;
 	}
 

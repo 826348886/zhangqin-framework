@@ -1,18 +1,13 @@
 package com.zhangqin.framework.common.enums;
 
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 /**
  * 比较运算符
  * 
  * @author kun
  *
  */
-@JsonDeserialize(using=JsonDeserializer.None.class)
-@JsonSerialize(using=JsonSerializer.None.class)
+// @JsonDeserialize(using=JsonDeserializer.None.class)
+// @JsonSerialize(using=JsonSerializer.None.class)
 public enum CompareOperator implements BaseEnum<CompareOperator, String> {
 	/**
 	 * 等于
