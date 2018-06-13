@@ -3,7 +3,7 @@ package com.zhangqin.framework.web.common.editors;
 import java.beans.PropertyEditorSupport;
 
 import com.zhangqin.framework.common.utils.JsonMapper;
-import com.zhangqin.framework.gpe.entity.SearchRuleMappingList;
+import com.zhangqin.framework.gpe.entity.NbsRuleMappingList;
 
 public class RuleMappingEditor extends PropertyEditorSupport {
 	
@@ -18,14 +18,14 @@ public class RuleMappingEditor extends PropertyEditorSupport {
 //			setValue(en);
 //		}
 //		
-		SearchRuleMappingList list = JsonMapper.fromJson(text, SearchRuleMappingList.class);
+		NbsRuleMappingList list = JsonMapper.fromJson(text, NbsRuleMappingList.class);
 		setValue(list);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public String getAsText() {
-		SearchRuleMappingList list = (SearchRuleMappingList)getValue();
+		NbsRuleMappingList list = (NbsRuleMappingList)getValue();
 		return JsonMapper.toJson(list);
 	}
 }

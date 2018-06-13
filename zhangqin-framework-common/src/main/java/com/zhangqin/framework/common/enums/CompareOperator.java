@@ -40,11 +40,11 @@ public enum CompareOperator implements BaseEnum<CompareOperator, String> {
 	/**
 	 * 左包含
 	 */
-	LK_L("LK_L", "左包含"),
+	LL("LL", "左包含"),
 	/**
 	 * 右包含
 	 */
-	LK_R("LK_R", "右包含"),
+	LR("LR", "右包含"),
 	/**
 	 * 不包含
 	 */

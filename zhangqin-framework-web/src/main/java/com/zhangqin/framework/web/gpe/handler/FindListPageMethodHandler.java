@@ -33,7 +33,10 @@ import com.zhangqin.framework.common.enums.CompareOperator;
 import com.zhangqin.framework.common.utils.BeanMapper;
 import com.zhangqin.framework.common.utils.EnumUtils;
 import com.zhangqin.framework.common.utils.JsonMapper;
-import com.zhangqin.framework.gpe.entity.SearchRuleMappingList;
+import com.zhangqin.framework.common.utils.ReflectUtils;
+import com.zhangqin.framework.gpe.annotation.NbsField;
+import com.zhangqin.framework.gpe.entity.NbsRuleMapping;
+import com.zhangqin.framework.gpe.entity.NbsRuleMappingList;
 import com.zhangqin.framework.web.common.utils.SpringContextUtils;
 import com.zhangqin.framework.web.core.RequestMappingHandlerAdapterPlus;
 import com.zhangqin.framework.web.gpe.ParameterRequestWrapper;
@@ -72,7 +75,7 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 	@Override
 	@ResponseBody
 	public PageInfo<Map<String, Object>> handler(HttpServletRequest request, HttpServletResponse response) {
-
+		// 处理查询规则映射
 		request = searchRuleMappingHandle(request);
 
 		Class<?> targetClass = getProxyMethod().getDeclaringClass();
@@ -103,14 +106,24 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 	/**
 	 * 处理查询规则映射 </br>
 	 * 普通方式提交，数字格式被动转化如下：</br>
-	 * rules[0][field]: dictCode </br>
-	 * rules[0][rule]: EQ </br>
-	 * rules[1][field]: dictName </br>
-	 * rules[1][rule]: LK
+	 * nbsRules[0][property]: dictCode </br>
+	 * nbsRules[0][operator]: EQ </br>
+	 * nbsRules[1][property]: dictName </br>
+	 * nbsRules[1][operator]: LK
 	 * 
 	 * @param request
 	 */
 	private HttpServletRequest searchRuleMappingHandle(HttpServletRequest request) {
+		// 获取查询对象
+		Class<?> queryClass = getAnnotation().queryClass();
+		if (null == queryClass || queryClass.equals(Class.class)) {
+			return request;
+		}
+
+		// 获取所有标记NbsField注解的字段
+		List<Field> fieldList = ReflectUtils.getFieldList(queryClass, NbsField.class);
+		Map<String, Field> fieldMap = fieldList.stream().collect(Collectors.toMap(Field::getName, Function.identity()));
+
 		// 获取所有的查询请求参数
 		HashMap<String, String[]> paramMap = new HashMap<String, String[]>(request.getParameterMap());
 
@@ -121,7 +134,7 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 		Iterator<Entry<String, String[]>> iterator = paramMap.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, String[]> entry = iterator.next();
-			if (entry.getKey().indexOf("rules[") == 0) {
+			if (entry.getKey().indexOf("nbsRules[") == 0) {
 				ruleParamMap.put(entry.getKey(), entry.getValue());
 				iterator.remove();
 			}
@@ -129,24 +142,55 @@ public class FindListPageMethodHandler extends AbstractGpeMethodHandler<PageInfo
 
 		// 规则数量 = ruleParamMap.size()/2
 		int ruleSize = ruleParamMap.size() / 2;
-		SearchRuleMappingList mappingList = new SearchRuleMappingList();
+		NbsRuleMappingList mappingList = new NbsRuleMappingList();
 		for (int i = 0; i < ruleSize; i++) {
-			String field = ruleParamMap.get("rules[" + i + "][field]")[0];
-			String rule = ruleParamMap.get("rules[" + i + "][rule]")[0];
+			String property = ruleParamMap.get("nbsRules[" + i + "][property]")[0];
+			String rule = ruleParamMap.get("nbsRules[" + i + "][operator]")[0];
 
+			// 未配置的字段不支持高级查询
+			if (!fieldMap.containsKey(property)) {
+				logger.warn("{}字段不支持牛逼查询。", property);
+				continue;
+			}
+
+			// 操作符
 			CompareOperator operator = (CompareOperator) EnumUtils.getEnumObj(CompareOperator.class, rule);
-			mappingList.add(field,operator);
+
+			// 查询规则映射
+			NbsRuleMapping mappnig = new NbsRuleMapping();
+			mappnig.setProperty(property);
+			mappnig.setOperator(operator);
+
+			// 获取该属性对应的字段
+			Field field = fieldMap.get(property);
+			// 获取字段对应的注解
+			NbsField annotation = field.getAnnotation(NbsField.class);
+
+			// 列名，数据库字段名
+			if (StringUtils.isNotBlank(annotation.column())) {
+				mappnig.setColumn(annotation.column());
+			} else {
+				String column = com.zhangqin.framework.common.utils.StringUtils.camelToUnderline(property);
+				mappnig.setColumn(column);
+			}
+
+			// 表别名
+			if (StringUtils.isNotBlank(annotation.tableAlias())) {
+				mappnig.setTableAlias(annotation.tableAlias());
+			}
+
+			mappingList.add(mappnig);
 		}
-		
+
 		// 查询规则映射列表存在记录，则添加rules参数
-		if(CollectionUtils.isNotEmpty(mappingList)) {
-			paramMap.put("rules", new String[] { JsonMapper.toJson(mappingList) });
+		if (CollectionUtils.isNotEmpty(mappingList)) {
+			paramMap.put("nbsRules", new String[] { JsonMapper.toJson(mappingList) });
 			// 修改request对象
 			HttpServletRequest req = (HttpServletRequest) request;
 			ParameterRequestWrapper requestWrapper = new ParameterRequestWrapper(req, paramMap);
 			return requestWrapper;
 		}
-		
+
 		return request;
 	}
 

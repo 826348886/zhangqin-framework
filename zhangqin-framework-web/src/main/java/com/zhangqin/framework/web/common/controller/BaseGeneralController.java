@@ -8,14 +8,14 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.zhangqin.framework.gpe.entity.SearchRuleMappingList;
+import com.zhangqin.framework.gpe.entity.NbsRuleMappingList;
 import com.zhangqin.framework.web.common.editors.BaseCustomDateEditor;
 import com.zhangqin.framework.web.common.editors.RuleMappingEditor;
 
 public abstract class BaseGeneralController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(SearchRuleMappingList.class, new RuleMappingEditor());
+		binder.registerCustomEditor(NbsRuleMappingList.class, new RuleMappingEditor());
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setLenient(false);

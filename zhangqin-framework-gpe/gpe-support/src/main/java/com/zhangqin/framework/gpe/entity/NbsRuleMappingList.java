@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import com.zhangqin.framework.common.enums.CompareOperator;
 
 /**
- * 查询规则映射列表
+ * 高级查询规则映射列表
  * 
  * @author kun
  *
  */
-public class SearchRuleMappingList extends ArrayList<SearchRuleMapping> {
+public class NbsRuleMappingList extends ArrayList<NbsRuleMapping> {
 
 	/**
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = -785502838839161848L;
 
-	public SearchRuleMappingList add(String field, CompareOperator rule) {
-		SearchRuleMapping mapping = new SearchRuleMapping(field, rule);
+	public NbsRuleMappingList add(String field, CompareOperator rule) {
+		NbsRuleMapping mapping = new NbsRuleMapping(field, rule);
 		super.add(mapping);
 		return this;
 	}

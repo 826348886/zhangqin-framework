@@ -27,11 +27,11 @@ public class BaseQO implements Serializable {
 	 */
 	@Mapping("pageSize")
 	private int rows;
-	
+
 	/**
-	 * 规则映射列表
+	 * 高级查询规则映射列表
 	 */
-	private SearchRuleMappingList rules = new SearchRuleMappingList();
+	private NbsRuleMappingList nbsRules = new NbsRuleMappingList();
 
 	public int getPage() {
 		return page;
@@ -49,12 +49,12 @@ public class BaseQO implements Serializable {
 		this.rows = rows;
 	}
 
-	public SearchRuleMappingList getRules() {
-		return rules;
+	public NbsRuleMappingList getNbsRules() {
+		return nbsRules;
 	}
 
-	public void setRules(SearchRuleMappingList rules) {
-		this.rules = rules;
+	public void setNbsRules(NbsRuleMappingList nbsRules) {
+		this.nbsRules = nbsRules;
 	}
 
 }
