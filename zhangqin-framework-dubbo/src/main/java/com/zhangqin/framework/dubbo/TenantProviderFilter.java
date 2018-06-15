@@ -23,7 +23,7 @@ public class TenantProviderFilter implements Filter {
 		String tenantId = RpcContext.getContext().getAttachment(BaseConstants.TENANT_ID);
 		TenantSelector.setTenantId(tenantId);
 		Result result = invoker.invoke(invocation);
-		TenantSelector.remove();
+		//TenantSelector.remove();
 		return result;
 	}
 }

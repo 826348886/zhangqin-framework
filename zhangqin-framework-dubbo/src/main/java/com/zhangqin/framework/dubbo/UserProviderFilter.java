@@ -8,7 +8,6 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
-import com.zhangqin.framework.common.dubbo.TenantSelector;
 import com.zhangqin.framework.common.dubbo.UserSelector;
 
 /**
@@ -24,7 +23,7 @@ public class UserProviderFilter implements Filter {
 		String userId = RpcContext.getContext().getAttachment(BaseConstants.USER_ID);
 		UserSelector.setUserId(userId);
 		Result result = invoker.invoke(invocation);
-		TenantSelector.remove();
+		UserSelector.remove();
 		return result;
 	}
 }
