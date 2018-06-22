@@ -3,20 +3,10 @@ package com.zhangqin.framework.dal.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.enums.FieldFill;
-
 /**
+ * 实体类基类
  * 
- * ClassName: BaseEntity
- * 
- * @Description: 实体类基类
  * @author zhangqin
- * @date 2018年1月13日
- *
- *       =================================================================================================
- *       Task ID Date Author Description
- *       ----------------+----------------+-------------------+-------------------------------------------
  *
  */
 public class BaseEntity implements Serializable {
@@ -33,31 +23,26 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@TableField(value = "create_time", fill = FieldFill.INSERT)
 	private Date createTime;
-	
+
 	/**
 	 * 创建人
 	 */
-	@TableField("create_user_id")
 	private String createUserId;
-	
+
 	/**
 	 * 最后修改时间
 	 */
-	@TableField(value = "update_time", fill = FieldFill.UPDATE)
 	private Date updateTime;
-	
+
 	/**
 	 * 最后修改人
 	 */
-	@TableField("update_user_id")
 	private String updateUserId;
-	
+
 	/**
 	 * 是否删除
 	 */
-	// @TableField(value = "deleted", fill = FieldFill.INSERT)
 	private Boolean deleted;
 
 	public String getId() {

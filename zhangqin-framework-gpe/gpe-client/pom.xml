@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.zhangqin.framework</groupId>
     <artifactId>zhangqin-framework-gpe</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>gpe-client</artifactId>
 </project>

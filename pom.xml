@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zhangqin.framework</groupId>
 	<artifactId>zhangqin-framework</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>基础框架</name>
@@ -14,6 +14,10 @@
 		<artifactId>zhangqin-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	
+	<properties>
+		<zhangqin.framework.version>1.0.0-SNAPSHOT</zhangqin.framework.version>
+	</properties>
 	
 	<!-- 用于配置分发管理，配置相应的产品发布信息,主要用于发布，在执行mvn deploy后表示要发布的位置 -->
 	<distributionManagement>
@@ -42,7 +46,6 @@
 	<modules>
 		<module>zhangqin-framework-web</module>
 		<module>zhangqin-framework-common</module>
-		<module>zhangqin-framework-core</module>
 		<module>zhangqin-framework-dal</module>
 		<module>zhangqin-framework-service</module>
 		<module>zhangqin-framework-gpe</module>
